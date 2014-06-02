@@ -24,5 +24,8 @@
   "homepage": "https://github.com/jsunconf/contriboot",
   "dependencies": {
     "request": "^2.36.0"
+  },
+  "devDependencies": {
+    "async-minihelper": "^1.0.0"
   }
 }
