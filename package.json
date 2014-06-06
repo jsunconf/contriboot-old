@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/jsunconf/contriboot",
   "dependencies": {
+    "gulp": "^3.7.0",
+    "gulp-nodemon": "^1.0.4",
     "request": "^2.36.0"
   },
   "devDependencies": {
