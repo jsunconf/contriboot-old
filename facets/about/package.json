@@ -1,0 +1,12 @@
+{
+  "name": "contriboot-about",
+  "version": "0.0.1",
+  "description": "The about pages",
+  "main": "index.js",
+  "scripts": {
+      "test": "lab -v"
+  },
+  "devDependencies": {
+    "lab": "^3.2.1"
+  }
+}

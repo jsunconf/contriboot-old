@@ -1,13 +1,14 @@
 {
   "name": "contriboot",
   "version": "0.0.0",
-  "description": "",
+  "description": "JS Unconf Contributions Application",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "lab -v",
+    "dev": "node ./bootstrap.js && gulp"
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,15 @@
   },
   "homepage": "https://github.com/jsunconf/contriboot",
   "dependencies": {
-    "gulp": "^3.7.0",
-    "gulp-nodemon": "^1.0.4",
+    "handlebars": "^2.0.0-alpha.4",
+    "hapi": "^5.1.0",
+    "path": "^0.4.9",
     "request": "^2.36.0"
   },
   "devDependencies": {
-    "async-minihelper": "^1.0.0"
+    "async-minihelper": "^1.0.0",
+    "gulp": "^3.7.0",
+    "gulp-nodemon": "^1.0.4",
+    "lab": "^3.2.1"
   }
 }
