@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{#if title }} {{title}} {{else}} Contriboot {{/if}}</title>
+    <meta name="keywords" content="{{siteInfo.keywords}}">
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <%- scriptLink('http://html5shim.googlecode.com/svn/trunk/html5.js', {type:'text/javascript'}) %>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="site">
+
+      </header>
+
+      {{{content}}}
+
+      <footer class="footer">
+
+      </footer>
+    </div>
+  </body>
+</html>
