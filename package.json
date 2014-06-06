@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/jsunconf/contriboot",
   "dependencies": {
+    "handlebars": "^2.0.0-alpha.4",
+    "hapi": "^5.1.0",
+    "path": "^0.4.9",
     "request": "^2.36.0"
   },
   "devDependencies": {
