@@ -8,6 +8,7 @@
 npm-debug.log
 coverage.html
 .idea
+.iml
 lib-cov
 
 node_modules
