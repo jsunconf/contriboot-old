@@ -6,62 +6,61 @@ var request = require('request'),
     testData = require('./test/fixtures/contribs-interests.json');
 
 function createDb (cb) {
-    request({
-        uri: root + testDbName,
-        method: 'PUT',
-        json: true
-    }, function (err, res, body) {
-        if (err) {
-            throw err;
-        }
+  request({
+    uri: root + testDbName,
+    method: 'PUT',
+    json: true
+  }, function (err, res, body) {
+    if (err) {
+      throw err;
+    }
 
-        console.log('[info] ' + 'db created');
-        cb && cb();
-    });
+    console.log('[info] ' + 'db created');
+    cb && cb();
+  });
 }
 
 function populateDb (cb) {
-    request({
-        uri: root + testDbName + '/_bulk_docs',
-        method: 'POST',
-        json: true,
-        body: {
-            docs: testData
-        }
-    }, function (err, res, body) {
-        if (err) {
-            throw err;
-        }
+  request({
+    uri: root + testDbName + '/_bulk_docs',
+    method: 'POST',
+    json: true,
+    body: {
+      docs: testData
+    }
+  }, function (err, res, body) {
+    if (err) {
+      throw err;
+    }
 
-        console.log('[info] ' + 'db populated');
-        cb && cb();
-    });
+    console.log('[info] ' + 'db populated');
+    cb && cb();
+  });
 }
 
 function deleteDb (cb) {
-    request({
-        uri: root + testDbName,
-        method: 'DELETE',
-        json: true
-    }, function (err, res, body) {
-        if (err) {
-            throw err;
-        }
+  request({
+    uri: root + testDbName,
+    method: 'DELETE',
+    json: true
+  }, function (err, res, body) {
+    if (err) {
+      throw err;
+    }
 
-        console.log('[info] ' + 'db deleted');
-        cb && cb();
-    });
+    console.log('[info] ' + 'db deleted');
+    cb && cb();
+  });
 }
 
 async([
-    function (cb) {
-        deleteDb(cb);
-    },
-    function (cb) {
-        createDb(cb);
-    },
-    function () {
-        populateDb();
-    }
-]);
-
+  function (cb) {
+    deleteDb(cb);
+  },
+  function (cb) {
+    createDb(cb);
+  },
+  function () {
+    populateDb();
+  }
+  ]);

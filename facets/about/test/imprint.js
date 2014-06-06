@@ -5,21 +5,23 @@ var Lab = require('lab'),
     expect = Lab.expect;
 
 var Hapi = require('hapi'),
-    about = require('../');
+    about = require('../'),
+    config = require('../../../config.js');
 
 about.name = 'user';
 about.version = '0.0.1';
 
-var server,
-    options = {url: '/imprint'};
+var settings = {
+  views: config.server.views,
+  siteInfo: config.siteInfo
+};
+
+var options = {url: '/imprint'},
+server;
 
 before(function (done) {
-    server = Hapi.createServer();
-    server.pack.register(about, done);
-
-  server.ext('onPreResponse', function (request, next) {
-    next();
-  });
+  server = Hapi.createServer();
+  server.pack.register(about, settings, done);
 });
 
 describe('Imprint', function () {

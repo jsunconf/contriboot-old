@@ -4,7 +4,7 @@
   "description": "The about pages",
   "main": "index.js",
   "scripts": {
-      "test": "lab -v"
+    "test": "lab -v"
   },
   "devDependencies": {
     "lab": "^3.2.1"
