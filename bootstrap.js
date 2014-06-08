@@ -1,9 +1,11 @@
 var request = require('request'),
     async = require('async-minihelper'),
+    couchApp = require('couchapp'),
     credentials = 'admin:admin',
     root = 'http://' + credentials + '@127.0.0.1:5984/',
     testDbName = 'contriboot_dev',
     testData = require('./test/fixtures/contribs-interests.json');
+
 
 function createDb (cb) {
   request({
@@ -53,6 +55,13 @@ function deleteDb (cb) {
   });
 }
 
+function createViews (cb) {
+  couchApp.createApp(require('./data/views.js'), root + testDbName, function (doc) {
+    doc.push();
+    cb && cb();
+  });
+}
+
 async([
   function (cb) {
     deleteDb(cb);
@@ -60,7 +69,10 @@ async([
   function (cb) {
     createDb(cb);
   },
+  function (cb) {
+    populateDb(cb);
+  },
   function () {
-    populateDb();
+    createViews();
   }
-  ]);
+]);
