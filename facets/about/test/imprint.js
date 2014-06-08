@@ -2,22 +2,26 @@ var Lab = require('lab'),
     describe = Lab.experiment,
     before = Lab.before,
     it = Lab.test,
-    expect = Lab.expect;
+    expect = Lab.expect,
+    path = require('path');
 
 var Hapi = require('hapi'),
-    about = require('../'),
-    config = require('../../../config.js');
+    about = require('../');
 
-about.name = 'user';
+about.name = 'about';
 about.version = '0.0.1';
 
 var settings = {
-  views: config.server.views,
-  siteInfo: config.siteInfo
+  views: {
+    engines: {
+      hbs: 'handlebars'
+    },
+    path: path.resolve(__dirname, '..', 'views')
+  }
 };
 
 var options = {url: '/imprint'},
-server;
+    server;
 
 before(function (done) {
   server = Hapi.createServer();
