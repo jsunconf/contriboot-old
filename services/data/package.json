@@ -1,0 +1,15 @@
+{
+  "name": "contriboot-data",
+  "version": "0.0.1",
+  "description": "data layer",
+  "main": "data.js",
+  "scripts": {
+    "test": "lab -v"
+  },
+  "devDependencies": {
+    "lab": "^3.2.1"
+  },
+  "dependencies": {
+    "couch-login": "^1.0.0"
+  }
+}

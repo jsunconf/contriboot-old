@@ -1,9 +1,9 @@
 var request = require('request'),
     async = require('async-minihelper'),
     couchApp = require('couchapp'),
-    credentials = 'admin:admin',
-    root = 'http://' + credentials + '@127.0.0.1:5984/',
-    testDbName = 'contriboot_dev',
+    couch = require('./config.js').couch,
+    root = 'http://' + couch.username + ':' + couch.password + '@' + couch.url + '/',
+    testDbName = couch.dbName,
     testData = require('./test/fixtures/contribs-interests.json');
 
 

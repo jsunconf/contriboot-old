@@ -1,0 +1,12 @@
+{
+  "name": "contriboot-ci",
+  "version": "0.0.1",
+  "description": "The actual app",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -v"
+  },
+  "devDependencies": {
+    "lab": "^3.2.1"
+  }
+}

@@ -1,7 +1,6 @@
 var Hapi = require('hapi'),
     config = require('./config.js');
 
-// Create a server with a host and port
 var server = Hapi.createServer(config.host, config.port, config.server);
 
 server.pack.require({
@@ -9,6 +8,11 @@ server.pack.require({
     views: config.server.views,
     siteInfo: config.siteInfo
   },
+  './facets/ci': {
+    views: config.server.views,
+    siteInfo: config.siteInfo
+  },
+  './services/data': config.couch
 }, function (err) {
   if (err) throw err;
 
