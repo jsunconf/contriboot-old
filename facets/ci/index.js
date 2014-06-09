@@ -21,13 +21,26 @@ exports.register = function Ci (facet, options, next) {
     method: 'GET',
     handler: function (request, reply) {
       request.server.methods.getContributionsAndInterests(function (err, data) {
-        var interests = data.rows.filter(function (element) {
-          return element.value.type === 'interest';
-        });
+
+        if (!data || !data.rows) {
+          data = {
+            rows: []
+          };
+        }
+
+        var submissions = data.rows.reduce(function (acc, curr, i, array) {
+          if (curr.value.type === 'interest') {
+            acc.interests.push(curr);
+          } else {
+            acc.contributions.push(curr);
+          }
+          return acc;
+        }, {interests: [], contributions: []});
 
         reply.view('index', {
           siteInfo: settings.siteInfo,
-          interests: interests
+          interests: submissions.interests,
+          contributions: submissions.contributions
         });
       });
     }

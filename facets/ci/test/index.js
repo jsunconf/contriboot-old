@@ -36,9 +36,15 @@ before(function (done) {
 });
 
 describe('Start page', function () {
-  it('It displays interests', function (done) {
+  it('displays interests', function (done) {
     server.inject(options, function (resp) {
       expect(resp.result).to.contain('JavaScript MVC');
+      done();
+    });
+  });
+  it('displays contributions', function (done) {
+    server.inject(options, function (resp) {
+      expect(resp.result).to.contain('JavaScript Patterns');
       done();
     });
   });

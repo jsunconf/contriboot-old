@@ -1,1 +1,7 @@
-{{#each interests}}{{this.value.title}}{{/each}}
+{{#each interests}}
+  <a href="/interests/{{this.value._id}}">{{this.value.title}}</a>
+{{/each}}
+
+{{#each contributions}}
+  <a href="/contributions/{{this.value._id}}">{{this.value.title}}</a>
+{{/each}}

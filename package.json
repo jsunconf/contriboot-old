@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/jsunconf/contriboot",
   "dependencies": {
+    "couch-login": "^1.0.0",
     "handlebars": "^2.0.0-alpha.4",
     "hapi": "^5.1.0",
     "hoek": "^2.3.0",
