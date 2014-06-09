@@ -1,5 +1,6 @@
 var path = require('path'),
-    Hoek = require('hoek');
+    Hoek = require('hoek'),
+    Hapi = require('hapi');
 
 var facetOptions = {
 
@@ -41,6 +42,39 @@ exports.register = function Ci (facet, options, next) {
           siteInfo: settings.siteInfo,
           interests: submissions.interests,
           contributions: submissions.contributions
+        });
+      });
+    }
+  });
+
+  facet.route({
+    path: '/contributions/{id}',
+    method: 'GET',
+    handler: function (request, reply) {
+      request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
+
+        if (!doc || !doc._id) {
+          return reply(Hapi.error.notFound('Id not found'));
+        }
+        reply.view('contribution', {
+          siteInfo: settings.siteInfo,
+          contribution: doc
+        });
+      });
+    }
+  });
+
+  facet.route({
+    path: '/interests/{id}',
+    method: 'GET',
+    handler: function (request, reply) {
+      request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
+        if (!doc || !doc._id) {
+          return reply(Hapi.error.notFound('Id not found'));
+        }
+        reply.view('interest', {
+          siteInfo: settings.siteInfo,
+          interest: doc
         });
       });
     }

@@ -1,7 +1,10 @@
 var CouchLogin = require('couch-login');
 
-exports.register = function Couch (service, couch, next) {
-  var auth = { name: couch.username, password: couch.password },
+exports.register = function Couch (service, couchSettings, next) {
+  var auth = {
+        name: couchSettings.username,
+        password: couchSettings.password
+      },
       couch;
 
   couch = new CouchLogin('http://localhost:5984/contriboot_dev', 'basic');
@@ -20,7 +23,15 @@ exports.register = function Couch (service, couch, next) {
     });
   });
 
+  service.method('getSubmissionById', function (id, next) {
+    couch.get('/' + id, function (err, cr, data) {
+      if (err || cr && cr.statusCode !== 200 || !data) {
+        return next(err);
+      }
+
+      return next(null, data);
+    });
+  });
+
   next();
 };
-
-
