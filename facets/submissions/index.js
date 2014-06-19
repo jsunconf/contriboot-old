@@ -6,7 +6,7 @@ var facetOptions = {
 
 };
 
-exports.register = function Ci (facet, options, next) {
+exports.register = function Submissions (facet, options, next) {
 
   var settings = Hoek.applyToDefaults(options, facetOptions);
 

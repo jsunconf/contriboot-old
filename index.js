@@ -7,7 +7,7 @@ server.pack.require({
   './facets/about': {
     views: config.server.views
   },
-  './facets/ci': {
+  './facets/submissions': {
     views: config.server.views
   },
   './services/data': config.couch
