@@ -19,7 +19,3 @@ exports.couch = {
   password: process.env.COUCH_PASSWORD || 'admin',
   dbName: process.env.COUCH_DBNAME || 'contriboot_dev'
 };
-
-exports.siteInfo = {
-  keywords: 'wurst, kase, ente'
-};

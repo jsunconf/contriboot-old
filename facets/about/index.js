@@ -21,7 +21,6 @@ exports.register = function About (facet, options, next) {
     method: 'GET',
     handler: function (request, reply) {
       reply.view('imprint', {
-        siteInfo: settings.siteInfo,
         title: 'Imprint'
       });
     }

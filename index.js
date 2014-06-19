@@ -5,12 +5,10 @@ var server = Hapi.createServer(config.host, config.port, config.server);
 
 server.pack.require({
   './facets/about': {
-    views: config.server.views,
-    siteInfo: config.siteInfo
+    views: config.server.views
   },
   './facets/ci': {
-    views: config.server.views,
-    siteInfo: config.siteInfo
+    views: config.server.views
   },
   './services/data': config.couch
 }, function (err) {

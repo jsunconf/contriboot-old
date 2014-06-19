@@ -39,7 +39,6 @@ exports.register = function Ci (facet, options, next) {
         }, {interests: [], contributions: []});
 
         reply.view('index', {
-          siteInfo: settings.siteInfo,
           interests: submissions.interests,
           contributions: submissions.contributions
         });
@@ -57,7 +56,6 @@ exports.register = function Ci (facet, options, next) {
           return reply(Hapi.error.notFound('Id not found'));
         }
         reply.view('contribution', {
-          siteInfo: settings.siteInfo,
           contribution: doc
         });
       });
@@ -73,7 +71,6 @@ exports.register = function Ci (facet, options, next) {
           return reply(Hapi.error.notFound('Id not found'));
         }
         reply.view('interest', {
-          siteInfo: settings.siteInfo,
           interest: doc
         });
       });
