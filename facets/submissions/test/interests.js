@@ -1,14 +1,14 @@
 var Lab = require('lab'),
-  describe = Lab.experiment,
-  before = Lab.before,
-  it = Lab.test,
-  expect = Lab.expect,
-  path = require('path');
+    describe = Lab.experiment,
+    before = Lab.before,
+    it = Lab.test,
+    expect = Lab.expect,
+    path = require('path');
 
 var Hapi = require('hapi'),
-  ci = require('../');
+    ci = require('../');
 
-ci.name = 'ci';
+ci.name = 'submission';
 ci.version = '0.0.1';
 
 var settings = {
@@ -21,7 +21,7 @@ var settings = {
 };
 
 var options = {url: '/interests/someid'},
-  server;
+    server;
 
 var fakeData = require('./fixtures/ci.json');
 

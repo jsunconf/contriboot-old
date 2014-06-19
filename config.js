@@ -14,7 +14,7 @@ exports.server = {
 };
 
 exports.couch = {
-  url: process.env.COUCH_URL || '127.0.0.1:5984',
+  url: process.env.COUCH_URL || 'http://127.0.0.1:5984',
   username: process.env.COUCH_USERNAME || 'admin',
   password: process.env.COUCH_PASSWORD || 'admin',
   dbName: process.env.COUCH_DBNAME || 'contriboot_dev'

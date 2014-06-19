@@ -77,5 +77,26 @@ exports.register = function Submissions (facet, options, next) {
     }
   });
 
+  facet.route({
+    path: '/interests/new',
+    method: 'GET',
+    handler: function (request, reply) {
+      reply.view('submit', {});
+    }
+  });
+
+  facet.route({
+    path: '/interests/',
+    method: 'POST',
+    handler: function (request, reply) {
+      var payload = request.payload;
+      payload.type = 'interest';
+      request.server.methods.saveSubmission(payload, function (err, doc) {
+        reply().redirect('interests/' + doc.id);
+      });
+    }
+  });
+
+
   next();
 };

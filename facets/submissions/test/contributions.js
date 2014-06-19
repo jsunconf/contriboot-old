@@ -8,7 +8,7 @@ var Lab = require('lab'),
 var Hapi = require('hapi'),
   ci = require('../');
 
-ci.name = 'ci';
+ci.name = 'submission';
 ci.version = '0.0.1';
 
 var settings = {

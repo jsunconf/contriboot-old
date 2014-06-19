@@ -2,7 +2,7 @@ var request = require('request'),
     async = require('async-minihelper'),
     couchApp = require('couchapp'),
     couch = require('./config.js').couch,
-    root = 'http://' + couch.username + ':' + couch.password + '@' + couch.url + '/',
+    root = 'http://' + couch.username + ':' + couch.password + '@' + couch.url.replace('http://', '') + '/',
     testDbName = couch.dbName,
     testData = require('./test/fixtures/contribs-interests.json');
 
