@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "make test",
-    "dev": "node ./bootstrap.js && gulp"
+    "dev": "npm run bootstrap && gulp",
+    "bootstrap": "node ./bootstrap.js"
   },
   "repository": {
     "type": "git",
