@@ -77,5 +77,13 @@ exports.register = function Submissions (facet, options, next) {
     }
   });
 
+  facet.route({
+    path: '/interests/new',
+    method: 'GET',
+    handler: function (request, reply) {
+      reply.view('submit', {});
+    }
+  });
+
   next();
 };

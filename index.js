@@ -3,6 +3,18 @@ var Hapi = require('hapi'),
 
 var server = Hapi.createServer(config.host, config.port, config.server);
 
+server.route({
+  path: '/static/{path*}',
+  method: 'GET',
+  handler: {
+    directory: {
+      path: './static',
+      listing: false,
+      index: false
+    }
+  }
+});
+
 server.pack.require({
   './facets/about': {
     views: config.server.views

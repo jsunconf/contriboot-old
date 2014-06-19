@@ -6,10 +6,10 @@ var Lab = require('lab'),
   path = require('path');
 
 var Hapi = require('hapi'),
-  ci = require('../');
+    submission = require('../');
 
-ci.name = 'submission';
-ci.version = '0.0.1';
+submission.name = 'submission';
+submission.version = '0.0.1';
 
 var settings = {
   views: {
@@ -20,30 +20,30 @@ var settings = {
   }
 };
 
-var options = {url: '/contributions/someid'},
-  server;
+var options = {url: '/interests/'},
+    server;
 
 var fakeData = require('./fixtures/ci.json');
 
 before(function (done) {
   server = Hapi.createServer();
-  server.pack.register(ci, settings, done);
+  server.pack.register(submission, settings, done);
 
   // mock couch call
   server.methods.getSubmissionById = function (id, next) {
-    return next(null, fakeData.rows[0].value);
+    return next(null, fakeData.rows[5].value);
   };
 });
 
-describe('contributions', function () {
-  it('displays contributions headline', function (done) {
+describe('interests', function () {
+  it('displays interest headline', function (done) {
     server.inject(options, function (resp) {
-      expect(resp.result).to.contain('<h2>npm</h2>');
+      expect(resp.result).to.contain('<h2>JavaScript MVC</h2>');
       done();
     });
   });
 
-  it('responds with a 404 status code if contribution does not exist', function (done) {
+  it('responds with a 404 status code if interest does not exist', function (done) {
     // mock couch call
     server.methods.getSubmissionById = function (id, next) {
       return next(null, '{"error":"not_found","reason":"missing"}');
