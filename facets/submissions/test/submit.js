@@ -64,12 +64,50 @@ describe('interests', function () {
     server.inject({
       url: '/interests/',
       method: 'POST',
-      payload: {}
+      payload: {
+        title: 'eeeeedddde',
+        name: 'asdasdasdasdasda',
+        description: 'asdasdasdasdasda'
+      }
     }, function (resp) {
       expect(resp.statusCode).to.equal(302);
       expect(resp.headers.location).to.contain('/interests/' + expectedId);
 
       done();
+    });
+  });
+
+  describe('validations', function () {
+    function testWithEmptyField (fieldName, done) {
+      var payload = {
+        title: 'sdfdfdsfgdsfg',
+        name: 'sdfdfdsfgdsfg',
+        description: 'dsfgdfsgdfsg'
+      };
+
+      payload[fieldName] = '';
+
+      server.inject({
+        url: '/interests/',
+        method: 'POST',
+        payload: payload
+      }, function (resp) {
+        expect(resp.statusCode).to.equal(400);
+        expect(resp.result.validation.keys).to.contain(fieldName);
+        done();
+      });
+    }
+
+    it('a title is required', function (done) {
+      testWithEmptyField('title', done);
+    });
+
+    it('a description is required', function (done) {
+      testWithEmptyField('description', done);
+    });
+
+    it('a name is required', function (done) {
+      testWithEmptyField('name', done);
     });
   });
 });

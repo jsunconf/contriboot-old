@@ -1,6 +1,7 @@
 var path = require('path'),
     Hoek = require('hoek'),
-    Hapi = require('hapi');
+    Hapi = require('hapi'),
+    Joi = require('joi');
 
 var facetOptions = {
 
@@ -88,6 +89,15 @@ exports.register = function Submissions (facet, options, next) {
   facet.route({
     path: '/interests/',
     method: 'POST',
+    config: {
+      validate: {
+        payload: {
+          title: Joi.string().min(3),
+          name: Joi.string().min(1),
+          description: Joi.string().min(10)
+        }
+      }
+    },
     handler: function (request, reply) {
       var payload = request.payload;
       payload.type = 'interest';
