@@ -8,22 +8,10 @@ var Lab = require('lab'),
 var Hapi = require('hapi'),
     submission = require('../');
 
-submission.name = 'submission';
-submission.version = '0.0.1';
-
-var settings = {
-  views: {
-    engines: {
-      hbs: 'handlebars'
-    },
-    path: path.resolve(__dirname, '..', 'views')
-  }
-};
-
 var server;
 before(function (done) {
   server = Hapi.createServer();
-  server.pack.register(submission, settings, done);
+  server.pack.register(submission, done);
 });
 
 describe('interests', function () {
@@ -58,7 +46,7 @@ describe('interests', function () {
     var expectedId = '123';
 
     server.methods.saveSubmission = function (payload, next) {
-      next(null, {id: expectedId})
+      next(null, {id: expectedId});
     };
 
     server.inject({

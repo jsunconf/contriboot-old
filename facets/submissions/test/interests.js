@@ -8,18 +8,6 @@ var Lab = require('lab'),
 var Hapi = require('hapi'),
     ci = require('../');
 
-ci.name = 'submission';
-ci.version = '0.0.1';
-
-var settings = {
-  views: {
-    engines: {
-      hbs: 'handlebars'
-    },
-    path: path.resolve(__dirname, '..', 'views')
-  }
-};
-
 var options = {url: '/interests/someid'},
     server;
 
@@ -27,7 +15,7 @@ var fakeData = require('./fixtures/ci.json');
 
 before(function (done) {
   server = Hapi.createServer();
-  server.pack.register(ci, settings, done);
+  server.pack.register(ci, done);
 
   // mock couch call
   server.methods.getSubmissionById = function (id, next) {
