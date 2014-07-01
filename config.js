@@ -6,7 +6,7 @@ exports.host = 'localhost';
 exports.server = {
   views: {
     engines: {
-      hbs: 'handlebars'
+      hbs: require('handlebars')
     },
     layoutPath: path.resolve(__dirname, 'templates'),
     layout: true

@@ -10,10 +10,10 @@ exports.register = function About (facet, options, next) {
   var settings = Hoek.applyToDefaults(options, facetOptions);
 
   facet.views({
-    engines: { hbs: 'handlebars' },
+    engines: { hbs: require('handlebars') },
     path: path.resolve(__dirname, 'views'),
-    layoutPath: settings.views.layoutPath,
-    layout: settings.views.layout
+    layoutPath: path.resolve(__dirname, '..', '..', 'templates'),  // TODO: create a template plugin
+    layout: true
   });
 
   facet.route({
@@ -27,4 +27,8 @@ exports.register = function About (facet, options, next) {
   });
 
   next();
+};
+
+exports.register.attributes = {
+  pkg: require('./package.json')
 };

@@ -3,29 +3,18 @@ var Lab = require('lab'),
     before = Lab.before,
     it = Lab.test,
     expect = Lab.expect,
-    path = require('path');
+    path = require('path'),
+    Hoek = require('hoek');
 
 var Hapi = require('hapi'),
     about = require('../');
-
-about.name = 'about';
-about.version = '0.0.1';
-
-var settings = {
-  views: {
-    engines: {
-      hbs: 'handlebars'
-    },
-    path: path.resolve(__dirname, '..', 'views')
-  }
-};
 
 var options = {url: '/imprint'},
     server;
 
 before(function (done) {
   server = Hapi.createServer();
-  server.pack.register(about, settings, done);
+  server.pack.register(about, done);
 });
 
 describe('Imprint', function () {
