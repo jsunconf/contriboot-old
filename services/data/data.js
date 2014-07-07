@@ -45,3 +45,7 @@ exports.register = function Couch (service, couchSettings, next) {
 
   next();
 };
+
+exports.register.attributes = {
+  pkg: require('./package.json')
+};

@@ -15,15 +15,18 @@ server.route({
   }
 });
 
-server.pack.require({
-  './facets/about': {
+server.pack.register([{
+    plugin: require('./facets/about'),
     views: config.server.views
   },
-  './facets/submissions': {
+  {
+    plugin: require('./facets/submissions'),
     views: config.server.views
   },
-  './services/data': config.couch
-}, function (err) {
+  {
+    options: config.couch,
+    plugin: require('./services/data')
+  }], function (err) {
   if (err) throw err;
 
   server.start(function () {

@@ -6,7 +6,7 @@ var Lab = require('lab'),
   path = require('path');
 
 var Hapi = require('hapi'),
-  ci = require('../');
+    ci = require('../');
 
 var options = {url: '/contributions/someid'},
   server;
