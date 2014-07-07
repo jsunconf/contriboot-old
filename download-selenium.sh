@@ -1,0 +1,1 @@
+test -s ./test/integration/bin/selenium-server-standalone-2.39.0.jar || curl -o ./test/integration/bin/selenium-server-standalone-2.39.0.jar https://selenium.googlecode.com/files/selenium-server-standalone-2.39.0.jar

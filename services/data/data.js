@@ -6,7 +6,6 @@ exports.register = function Couch (service, couchSettings, next) {
         password: couchSettings.password
       },
       couch;
-
   couch = new CouchLogin(couchSettings.url + '/' + couchSettings.dbName, 'basic');
   couch.strictSSL = false;
   couch.login(auth, function (er, cr, data) {
@@ -18,7 +17,6 @@ exports.register = function Couch (service, couchSettings, next) {
       if (err || cr && cr.statusCode !== 200 || !data) {
         return next(err);
       }
-
       return next(null, data);
     });
   });
