@@ -1,3 +1,14 @@
 language: node_js
 node_js:
-  - "0.10"
+  - '0.10'
+before_script:
+  - ./create-admin-user.sh
+  - npm run bootstrap
+services:
+  - couchdb
+addons:
+  sauce_connect: true
+env:
+  global:
+    - secure: S2pA/M7yw/igidDL9DT87AfwLD1yZy1PSAQhVy5I190waE1wkkD0pjbt0Um0JFioqSZzntVAiZxqf3ui99Mlpd7JUqDtgCRx/i/YJCgEt3VJA+GfiMVoCemtzlDFA7TFmSxzosGGhLbsXsJBdtFswoBNeLv4f7gWrBax8maUxTo=
+    - secure: KUQAHomY9HH5ipckf9K8mwpMQwaRN54l1CAAQl9u3+SIAkCN2Epcloph9HG+MvzIVFhkh3imW9Bi1mGE5/mMiwSg+jfr3u7b5SAbB2fkTy3H5pAwUF0krShoZKDZ5VdEF/kgYU767cwUSmJ7ObQg57SXSroyUhuVAUSvrAwhNv0=

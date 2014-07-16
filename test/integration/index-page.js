@@ -20,8 +20,13 @@ after(function (done) {
   });
 });
 
+var browser;
+if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
+  browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY);
+} else {
+  browser = wd.promiseChainRemote();
+}
 
-var browser = wd.promiseChainRemote();
 browser.on('status', function (info) {
   console.log(info.cyan);
 });
@@ -32,7 +37,7 @@ browser.on('command', function (meth, path, data) {
 describe('Start page', function () {
 
   it('displays interests', {timeout: 100500}, function (done) {
-    browser.init({browserName: 'firefox'})
+    browser.init({'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER})
       .get(s.url + '/')
       .elementByTagName('a')
       .text()

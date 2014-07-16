@@ -12,4 +12,4 @@ coverage.html
 lib-cov
 
 node_modules
-selenium-server-standalone-2.39.0.jar
+selenium-server-standalone-*.jar
