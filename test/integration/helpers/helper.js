@@ -1,8 +1,14 @@
 var config = require('../../../config.js'),
-    spawn = require('child_process').spawn;
+    spawn = require('child_process').spawn,
+    Lab = require('lab'),
+    before = Lab.before,
+    after = Lab.after,
+    wd = require('wd');
 
-exports.selenium = {
-  url: 'http://' + config.host + ':' + config.port,
+exports.options = { timeout: 10000 };
+exports.BASE_URL = 'http://' + config.host + ':' + config.port;
+
+var s = {
   createBrowser: '',
   server: null,
   app: null,
@@ -31,7 +37,6 @@ exports.selenium = {
     });
   },
   startApp: function (cb) {
-
     this.app = spawn('node', ['index.js'], {cwd: __dirname + '/../../../'});
     this.app.stdout.on('data', function (data) {
       if (data.toString().indexOf('Hapi server started') !== -1) {
@@ -45,4 +50,34 @@ exports.selenium = {
       cb();
     });
   }
+};
+
+
+exports.init = function () {
+  var browser;
+
+  before(function (done) {
+    s.start(done);
+  });
+
+  after(function (done) {
+    browser.quit(function () {
+      s.stop(done);
+    });
+  });
+
+  if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
+    browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY);
+  } else {
+    browser = wd.promiseChainRemote();
+  }
+
+  browser.on('status', function (info) {
+    console.log(info.cyan);
+  });
+  browser.on('command', function (meth, path, data) {
+    console.log(' > ' + meth.yellow, path.grey, data || '');
+  });
+
+  return browser;
 };
