@@ -79,5 +79,5 @@ exports.init = function () {
     console.log(' > ' + meth.yellow, path.grey, data || '');
   });
 
-  return browser;
+  return browser.init({'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER});
 };

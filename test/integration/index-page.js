@@ -12,7 +12,7 @@ var browser = helper.init();
 
 describe('Start page', function () {
   it('displays interests', helper.options, function (done) {
-    browser.init({'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER})
+    browser
       .get(url + '/')
       .elementByTagName('a')
       .text()
