@@ -11,17 +11,11 @@ var helper = require('./helpers/helper.js'),
 
 describe('Interests', function () {
   var browser;
-  before(function (done) {
-    helper.s.start(function () {
-      browser = helper.init();
-      done();
-    });
+  helper.testHelper(before, after, function (browserInstance, done) {
+    browser = browserInstance;
+    done();
   });
-  after(function (done) {
-    browser.quit(function () {
-      helper.s.stop(done);
-    });
-  });
+
   it('allows to add interests', helper.options, function (done) {
     browser
       .get(url + '/interests/new')

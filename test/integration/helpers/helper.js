@@ -51,9 +51,8 @@ var s = {
     });
   }
 };
-exports.s = s;
 
-exports.init = function () {
+var init = exports.init = function () {
   var browser;
 
   if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
@@ -70,4 +69,19 @@ exports.init = function () {
   });
 
   return browser.init({'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER});
+};
+
+exports.testHelper = function (before, after, cb) {
+  var browser;
+  before(function (done) {
+    s.start(function () {
+      browser = init();
+      cb(browser, done);
+    });
+  });
+  after(function (done) {
+    browser.quit(function () {
+      s.stop(done);
+    });
+  });
 };
