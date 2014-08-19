@@ -1,33 +1,44 @@
 var helper = require('./helpers/helper.js'),
-    colors = require('colors'),
     url = helper.BASE_URL,
     Lab = require('lab'),
     describe = Lab.experiment,
     it = Lab.test,
+    before = Lab.before,
+    after = Lab.after,
     expect = Lab.expect,
     path = require('path');
 
 
-var browser = helper.init();
-
 describe('Interests', function () {
+  var browser;
+  before(function (done) {
+    helper.s.start(function () {
+      browser = helper.init();
+      done();
+    });
+  });
+  after(function (done) {
+    browser.quit(function () {
+      helper.s.stop(done);
+    });
+  });
   it('allows to add interests', helper.options, function (done) {
     browser
       .get(url + '/interests/new')
       .elementByName('title')
-      .sendKeys('roggo mag brot')
+      .sendKeys('rocko mag brot')
       .elementByName('name')
-      .sendKeys('roggo artischoggo')
+      .sendKeys('rocko artischocko')
       .elementByName('description')
-      .sendKeys('this is the best talk evvvvvaaaaaa')
+      .sendKeys('this is the best talk')
       .elementByTagName('button')
       .click()
       .elementByTagName('body')
       .text()
       .then(function (value) {
-         expect(value).to.contain('roggo artischoggo');
-         expect(value).to.contain('roggo mag brot');
-         return expect(value).to.contain('this is the best talk evvvvvaaaaaa');
+         expect(value).to.contain('rocko artischocko');
+         expect(value).to.contain('rocko mag brot');
+         return expect(value).to.contain('this is the best talk');
       })
       .nodeify(done);
   });

@@ -1,8 +1,7 @@
 var config = require('../../../config.js'),
+    colors = require('colors'),
     spawn = require('child_process').spawn,
     Lab = require('lab'),
-    before = Lab.before,
-    after = Lab.after,
     wd = require('wd');
 
 exports.options = { timeout: 10000 };
@@ -40,6 +39,7 @@ var s = {
     this.app = spawn('node', ['index.js'], {cwd: __dirname + '/../../../'});
     this.app.stdout.on('data', function (data) {
       if (data.toString().indexOf('Hapi server started') !== -1) {
+        console.log("hapi started");
         cb();
       }
     });
@@ -51,20 +51,10 @@ var s = {
     });
   }
 };
-
+exports.s = s;
 
 exports.init = function () {
   var browser;
-
-  before(function (done) {
-    s.start(done);
-  });
-
-  after(function (done) {
-    browser.quit(function () {
-      s.stop(done);
-    });
-  });
 
   if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
     browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, process.env.SAUCE_USERNAME, process.env.SAUCE_ACCESS_KEY);

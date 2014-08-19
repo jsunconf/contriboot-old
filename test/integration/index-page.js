@@ -1,16 +1,27 @@
 var helper = require('./helpers/helper.js'),
-    colors = require('colors'),
     url = helper.BASE_URL,
     Lab = require('lab'),
     describe = Lab.experiment,
     it = Lab.test,
+    before = Lab.before,
+    after = Lab.after,
     expect = Lab.expect,
     path = require('path');
 
 
-var browser = helper.init();
-
 describe('Start page', function () {
+  var browser;
+  before(function (done) {
+    helper.s.start(function () {
+      browser = helper.init();
+      done();
+    });
+  });
+  after(function (done) {
+    browser.quit(function () {
+      helper.s.stop(done);
+    });
+  });
   it('displays interests', helper.options, function (done) {
     browser
       .get(url + '/')
