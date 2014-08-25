@@ -11,7 +11,7 @@ exports.register = function About (facet, options, next) {
 
   facet.views({
     engines: { hbs: require('handlebars') },
-    path: path.resolve(__dirname, 'views'),
+    path: path.resolve(__dirname, '..', '..', 'templates', 'about'),
     layoutPath: path.resolve(__dirname, '..', '..', 'templates'),  // TODO: create a template plugin
     layout: true
   });
