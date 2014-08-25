@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     path = require('path');
 
 gulp.task('default', function () {
-  nodemon({ script: 'index.js', ext: 'html js hbs less'})
+  nodemon({ script: 'server.js', ext: 'html js hbs less'})
     .on('restart', function (files) {
       console.info('app restarted!');
     })

@@ -36,7 +36,7 @@ var s = {
     });
   },
   startApp: function (cb) {
-    this.app = spawn('node', ['index.js'], {cwd: __dirname + '/../../../'});
+    this.app = spawn('node', ['server.js'], {cwd: __dirname + '/../../../'});
     this.app.stdout.on('data', function (data) {
       if (data.toString().indexOf('Hapi server started') !== -1) {
         console.log("hapi started");
