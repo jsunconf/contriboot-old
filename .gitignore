@@ -13,3 +13,4 @@ lib-cov
 
 node_modules
 selenium-server-standalone-*.jar
+static/basic-theme/css/*.css
