@@ -4,7 +4,7 @@ var config = require('../../../config.js'),
     Lab = require('lab'),
     wd = require('wd');
 
-exports.options = { timeout: 30000 };
+exports.options = { timeout: 60000 };
 exports.BASE_URL = 'http://' + config.host + ':' + config.port;
 
 var s = {
