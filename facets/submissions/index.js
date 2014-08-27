@@ -1,15 +1,8 @@
 var path = require('path'),
-    Hoek = require('hoek'),
     Hapi = require('hapi'),
     Joi = require('joi');
 
-var facetOptions = {
-
-};
-
 exports.register = function Submissions (facet, options, next) {
-
-  var settings = Hoek.applyToDefaults(options, facetOptions);
 
   facet.views({
     engines: { hbs: require('handlebars') },

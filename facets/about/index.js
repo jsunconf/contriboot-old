@@ -1,13 +1,6 @@
-var path = require('path'),
-    Hoek = require('hoek');
-
-var facetOptions = {
-
-};
+var path = require('path');
 
 exports.register = function About (facet, options, next) {
-
-  var settings = Hoek.applyToDefaults(options, facetOptions);
 
   facet.views({
     engines: { hbs: require('handlebars') },

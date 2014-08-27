@@ -3,8 +3,7 @@ var Lab = require('lab'),
     before = Lab.before,
     it = Lab.test,
     expect = Lab.expect,
-    path = require('path'),
-    Hoek = require('hoek');
+    path = require('path');
 
 var Hapi = require('hapi'),
     about = require('../');
