@@ -1,6 +1,11 @@
 var path = require('path');
 
-exports.port = 8000;
+var port = 8000;
+if (process.env.NODE_ENV === 'test') {
+  port = 8001;
+}
+
+exports.port = process.env.PORT || port;
 exports.host = 'localhost';
 
 exports.server = {
