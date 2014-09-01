@@ -19,7 +19,7 @@ describe('Start page', function () {
   it('displays interests', helper.options, function (done) {
     browser
       .get(url + '/')
-      .elementByTagName('a')
+      .elementByCssSelector('ul.interests a')
       .text()
       .then(function (value) {
          return expect(value).to.equal('JS as compilation target');

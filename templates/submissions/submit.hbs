@@ -1,15 +1,21 @@
 <div ng-app>
-  <form method="POST" action="/interests/" name="form" novalidate>
-    <label for="title" class="">Title:</label>
-    <input ng-required="true" ng-model="submission.title" name="title">
+  <form method="POST" action="/interests/" name="form" role="form" novalidate>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input ng-required="true" ng-model="submission.title" name="title" class="form-control">
+    </div>
 
-    <label for="name" class="">Your name:</label>
-    <input ng-required="true" ng-model="submission.name" name="name">
+    <div class="form-group">
+      <label for="name">Your name</label>
+      <input ng-required="true" ng-model="submission.name" name="name" class="form-control">
+    </div>
 
-    <label for="description" class="">Description:</label>
-    <textarea ng-required="true" ng-model="submission.description" name="description"></textarea>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea ng-required="true" ng-model="submission.description" name="description" class="form-control"></textarea>
+    </div>
 
-    <button ng-disabled="form.$invalid">Submit</button>
+    <button class="btn btn-primary" ng-disabled="form.$invalid">Submit</button>
   </form>
 
 </div>
