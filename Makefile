@@ -1,4 +1,7 @@
-test: unit integration
+test: jshint unit integration
+
+jshint:
+	./node_modules/jshint/bin/jshint .
 
 unit:
 	cd ./facets/about && npm i && npm test
@@ -9,4 +12,4 @@ integration:
 	npm run bootstrap
 	./node_modules/lab/bin/lab ./test/integration
 
-.PHONY: test unit integration
+.PHONY: test unit integration jshint
