@@ -9,7 +9,9 @@ exports.register = function Couch (service, couchSettings, next) {
   couch = new CouchLogin(couchSettings.url + '/' + couchSettings.dbName, 'basic');
   couch.strictSSL = false;
   couch.login(auth, function (er, cr, data) {
-    if (er) throw er;
+    if (er) {
+      throw er;
+    }
   });
 
   service.method('getContributionsAndInterests', function (next) {

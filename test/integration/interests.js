@@ -5,8 +5,7 @@ var helper = require('./helpers/helper.js'),
     it = Lab.test,
     before = Lab.before,
     after = Lab.after,
-    expect = Lab.expect,
-    path = require('path');
+    expect = Lab.expect;
 
 
 describe('Interests', function () {

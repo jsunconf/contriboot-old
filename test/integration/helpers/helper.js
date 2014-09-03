@@ -1,8 +1,9 @@
-var config = require('../../../config.js'),
-    colors = require('colors'),
+  var config = require('../../../config.js'),
     spawn = require('child_process').spawn,
-    Lab = require('lab'),
     wd = require('wd');
+
+require('colors');
+
 
 exports.options = { timeout: 60000 };
 exports.BASE_URL = 'http://' + config.host + ':' + config.port;

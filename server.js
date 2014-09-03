@@ -27,7 +27,9 @@ server.pack.register([{
     options: config.couch,
     plugin: require('./services/data')
   }], function (err) {
-  if (err) throw err;
+  if (err) {
+    throw err;
+  }
 
   server.start(function () {
     console.log('Hapi server started @ ' + server.info.uri);

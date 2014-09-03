@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
-    less = require('gulp-less'),
-    path = require('path');
+    less = require('gulp-less');
 
 gulp.task('default', function () {
   nodemon({ script: 'server.js', ext: 'html js hbs less'})
