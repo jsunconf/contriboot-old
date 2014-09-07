@@ -2,10 +2,12 @@ var Lab = require('lab'),
     describe = Lab.experiment,
     before = Lab.before,
     it = Lab.test,
-    expect = Lab.expect;
+    expect = Lab.expect,
+    config = require('../../../config.js'),
+    getViewPath = config.getViewPath;
 
 var Hapi = require('hapi'),
-    ci = require('../');
+    submissions = require('../');
 
 var options = {url: '/'},
     server;
@@ -14,8 +16,12 @@ var fakeData = require('./fixtures/ci.json');
 
 before(function (done) {
   server = Hapi.createServer();
-  server.pack.register(ci, done);
-
+  server.pack.register({
+    plugin: submissions,
+    options: getViewPath({
+      views: config.server.views
+    }, 'submissions')
+  }, done);
   // mock couch call
   server.methods.getContributionsAndInterests = function (next) {
     return next(null, fakeData);

@@ -7,16 +7,25 @@ if (process.env.NODE_ENV === 'test') {
 
 exports.port = process.env.PORT || port;
 exports.host = 'localhost';
+exports.theme = 'basic-theme';
 
+var templatePath = path.resolve(__dirname, 'templates', exports.theme);
 exports.server = {
   views: {
     engines: {
       hbs: require('handlebars')
     },
-    layoutPath: path.resolve(__dirname, 'templates'),
+    layoutPath: templatePath,
     layout: true
   }
 };
+
+exports.getViewPath = getViewPath;
+function getViewPath (conf, name) {
+  conf.views.path = path.resolve(templatePath, name);
+  return conf;
+}
+
 
 exports.couch = {
   url: process.env.COUCH_URL || 'http://127.0.0.1:5984',

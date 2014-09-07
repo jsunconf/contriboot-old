@@ -20,3 +20,9 @@ databases with the name `contriboot_dev`**
  $ npm run dev            # bootstraps a database and starts the server
 ```
 
+## Theming
+
+The templates for the facets are located in `/templates`. You can
+set your template in the `config.js`.
+
+The css/less and JavaScript for the themes is located in `/static`.

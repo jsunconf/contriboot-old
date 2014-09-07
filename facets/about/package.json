@@ -8,8 +8,5 @@
   },
   "devDependencies": {
     "lab": "^3.2.1"
-  },
-  "dependencies": {
-    "handlebars": "~2.0.0-alpha.4"
   }
 }

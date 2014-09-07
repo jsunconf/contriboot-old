@@ -1,4 +1,5 @@
-var gulp = require('gulp'),
+var config = require('./config.js'),
+    gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     less = require('gulp-less');
 
@@ -11,7 +12,7 @@ gulp.task('default', function () {
 });
 
 gulp.task('less', function () {
-  gulp.src('./static/basic-theme/less/*.less')
+  gulp.src('./static/' + config.theme + '/less/*.less')
     .pipe(less())
-    .pipe(gulp.dest('./static/basic-theme/css'));
+    .pipe(gulp.dest('./static/' + config.theme + '/css'));
 });

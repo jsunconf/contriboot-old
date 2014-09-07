@@ -43,7 +43,7 @@ var s = {
     );
     this.app.stdout.on('data', function (data) {
       if (data.toString().indexOf('Hapi server started') !== -1) {
-        console.log("hapi started");
+        console.log(data.toString());
         cb();
       }
     });

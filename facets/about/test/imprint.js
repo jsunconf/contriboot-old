@@ -2,7 +2,9 @@ var Lab = require('lab'),
     describe = Lab.experiment,
     before = Lab.before,
     it = Lab.test,
-    expect = Lab.expect;
+    expect = Lab.expect,
+    config = require('../../../config.js'),
+    getViewPath = config.getViewPath;
 
 var Hapi = require('hapi'),
     about = require('../');
@@ -12,7 +14,12 @@ var options = {url: '/imprint'},
 
 before(function (done) {
   server = Hapi.createServer();
-  server.pack.register(about, done);
+  server.pack.register({
+    plugin: about,
+    options: getViewPath({
+      views: config.server.views
+    }, 'about')
+  }, done);
 });
 
 describe('Imprint', function () {

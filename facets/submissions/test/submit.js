@@ -2,16 +2,22 @@ var Lab = require('lab'),
     describe = Lab.experiment,
     before = Lab.before,
     it = Lab.test,
-    expect = Lab.expect;
+    expect = Lab.expect,
+    config = require('../../../config.js'),
+    getViewPath = config.getViewPath;
 
 var Hapi = require('hapi'),
-    submission = require('../');
+    submissions = require('../');
 
 var server;
 before(function (done) {
   server = Hapi.createServer();
-  server.pack.register(submission, done);
-});
+  server.pack.register({
+    plugin: submissions,
+    options: getViewPath({
+      views: config.server.views
+    }, 'submissions')
+  }, done);});
 
 describe('interests', function () {
   it('takes interests as POST and calls the couch service', function (done) {

@@ -1,5 +1,5 @@
 {
-  "name": "contriboot-ci",
+  "name": "contriboot-submissions",
   "version": "0.0.1",
   "description": "The actual app",
   "main": "index.js",

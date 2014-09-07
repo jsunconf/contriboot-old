@@ -1,5 +1,6 @@
 var Hapi = require('hapi'),
-    config = require('./config.js');
+    config = require('./config.js'),
+    getViewPath = config.getViewPath;
 
 var server = Hapi.createServer(config.host, config.port, config.server);
 
@@ -16,12 +17,16 @@ server.route({
 });
 
 server.pack.register([{
-    plugin: require('./facets/about'),
-    views: config.server.views
+  plugin: require('./facets/about'),
+    options: getViewPath({
+      views: config.server.views
+    }, 'about')
   },
   {
     plugin: require('./facets/submissions'),
-    views: config.server.views
+    options: getViewPath({
+      views: config.server.views
+    }, 'submissions')
   },
   {
     options: config.couch,
