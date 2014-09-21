@@ -4,6 +4,7 @@ jshint:
 	./node_modules/jshint/bin/jshint .
 
 unit:
+	npm i
 	cd ./facets/about && npm i && npm test
 	cd ./facets/submissions && npm i && npm test
 
