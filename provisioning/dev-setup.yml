@@ -11,5 +11,6 @@
 
   roles:
     - {role: ANXS.build-essential}
-    - {role: ANXS.erlang, erlang_version: 17.1}
+    - {role: ANXS.erlang, erlang_version: 17.1,
+        erlang_install_method: "package", ubuntu_version: "trusty"}
     - {role: guillaumededrie.couchdb, couchdb_version: 1.6.1}

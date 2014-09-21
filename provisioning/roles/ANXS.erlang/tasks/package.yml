@@ -1,0 +1,11 @@
+---
+# file: tasks/package.yml
+
+- name: Erlang | Download the Erlang package
+  get_url:
+    url: "http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_17.1-1~ubuntu~{{ubuntu_version}}_amd64.deb"
+    dest: "/tmp/esl-erlang_{{erlang_version}}-1~ubuntu~{{ubuntu_version}}_amd64.deb"
+
+- name: Erlang | Install the package
+  apt: deb=/tmp/esl-erlang_{{erlang_version}}-1~ubuntu~{{ubuntu_version}}_amd64.deb
+  sudo: true
