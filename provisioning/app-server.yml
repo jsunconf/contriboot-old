@@ -1,0 +1,32 @@
+---
+
+- name: prepare app server
+  hosts: vagrantgroup
+  vars_files:
+    - vars.yml
+  sudo: yes
+  user: root
+  tasks:
+    - name: add chris lea's ppa
+      apt_repository: repo='ppa:chris-lea/node.js' state=present update_cache=yes
+
+    - name: Install node!
+      apt: pkg=nodejs state=latest
+
+    - name: Install packages
+      apt: name={{item}} state=latest
+      with_items:
+        - git
+        - vim
+
+    - name: Create web user
+      user: name=web
+
+    - name: Create project folder
+      file: path=/var/www group=web owner=web mode=755 state=directory
+
+    - name: Add upstart conf
+      template: src=templates/upstart.conf.j2 dest=/etc/init/{{project_name}}.conf
+
+    - name: start {{project_name}} on very boot
+      service: name={{project_name}} enabled=yes

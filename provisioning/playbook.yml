@@ -1,0 +1,6 @@
+---
+
+- include: dev-setup.yml
+- include: app-server.yml
+- include: deploy.yml
+- include: dev-post-deploy.yml

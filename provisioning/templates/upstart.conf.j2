@@ -1,0 +1,19 @@
+# /etc/init/{{project_name}}.conf
+
+start on started network
+stop on stopping network
+
+# When to start the service
+start on filesystem and net-device-up IFACE!=lo
+
+# When to stop the service
+stop on runlevel [016]
+
+respawn
+
+setuid web
+setgid web
+
+env NODE_ENV=production
+
+exec /usr/bin/node {{project_root}}/server.js
