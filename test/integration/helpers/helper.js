@@ -28,7 +28,7 @@ var s = {
     this.server.kill();
   },
   startSeleniumServer: function (cb) {
-    this.server = spawn('java', ['-jar', 'selenium-server-standalone-2.42.2.jar'],
+    this.server = spawn('java', ['-jar', 'selenium-server-standalone-2.43.1.jar'],
         {cwd: __dirname + '/../bin'});
     this.server.stdout.on('data', function (data) {
       if (data.toString().indexOf('Started HttpContext[/wd,/wd]') !== -1) {
