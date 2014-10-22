@@ -66,10 +66,18 @@ exports.register = function Submissions (facet, options, next) {
   });
 
   facet.route({
+    path: '/contributions/new',
+    method: 'GET',
+    handler: function (request, reply) {
+      reply.view('submit', {type: 'contributions'});
+    }
+  });
+
+  facet.route({
     path: '/interests/new',
     method: 'GET',
     handler: function (request, reply) {
-      reply.view('submit', {});
+      reply.view('submit', {type: 'interests'});
     }
   });
 
@@ -90,6 +98,27 @@ exports.register = function Submissions (facet, options, next) {
       payload.type = 'interest';
       request.server.methods.saveSubmission(payload, function (err, doc) {
         reply().redirect('interests/' + doc.id);
+      });
+    }
+  });
+
+  facet.route({
+    path: '/contributions/',
+    method: 'POST',
+    config: {
+      validate: {
+        payload: {
+          title: Joi.string().min(3),
+          name: Joi.string().min(1),
+          description: Joi.string().min(10)
+        }
+      }
+    },
+    handler: function (request, reply) {
+      var payload = request.payload;
+      payload.type = 'contribution';
+      request.server.methods.saveSubmission(payload, function (err, doc) {
+        reply().redirect('contributions/' + doc.id);
       });
     }
   });

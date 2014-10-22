@@ -1,5 +1,5 @@
 <div ng-app>
-  <form method="POST" action="/interests/" name="form" role="form" novalidate>
+  <form method="POST" action="/{{type}}/" name="form" role="form" novalidate>
     <div class="form-group">
       <label for="title">Title</label>
       <input ng-required="true" ng-model="submission.title" name="title" class="form-control">

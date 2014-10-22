@@ -7,6 +7,6 @@
     "test": "lab -v"
   },
   "devDependencies": {
-    "lab": "^3.2.1"
+    "lab": "~3.2.3"
   }
 }

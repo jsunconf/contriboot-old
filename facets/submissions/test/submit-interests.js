@@ -17,7 +17,8 @@ before(function (done) {
     options: getViewPath({
       views: config.server.views
     }, 'submissions')
-  }, done);});
+  }, done);
+});
 
 describe('interests', function () {
   it('takes interests as POST and calls the couch service', function (done) {
