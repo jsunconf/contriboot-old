@@ -11,5 +11,8 @@
   "undef": true,
   "unused": "vars",
   "nonbsp": true,
-  "expr": true
+  "expr": true,
+  "globals": {
+    "angular": true
+  }
 }

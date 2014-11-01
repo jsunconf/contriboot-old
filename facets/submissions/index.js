@@ -1,9 +1,27 @@
 var Hapi = require('hapi'),
     Joi = require('joi');
 
+function getVotesFromCookie (request) {
+  return request.state.votes && request.state.votes.votes  || [];
+}
+
+exports.hasUserAlreadyVotedForSubmission = hasUserAlreadyVotedForSubmission;
+function hasUserAlreadyVotedForSubmission (request, doc) {
+  var votes = getVotesFromCookie(request);
+
+  return votes.indexOf(doc._id) !== -1;
+}
+
 exports.register = function Submissions (facet, options, next) {
 
   facet.views(options.views);
+
+  facet.state('votes', {
+    ttl: 86400 * 1000 * 365,
+    isHttpOnly: true,
+    encoding: 'base64json',
+    path: '/'
+  });
 
   facet.route({
     path: '/',
@@ -26,10 +44,12 @@ exports.register = function Submissions (facet, options, next) {
           return acc;
         }, {interests: [], contributions: []});
 
-        reply.view('index', {
-          interests: submissions.interests,
-          contributions: submissions.contributions
-        });
+        reply
+          .view('index', {
+            interests: submissions.interests,
+            contributions: submissions.contributions
+          });
+
       });
     }
   });
@@ -43,8 +63,10 @@ exports.register = function Submissions (facet, options, next) {
         if (!doc || !doc._id) {
           return reply(Hapi.error.notFound('Id not found'));
         }
+
         reply.view('contribution', {
-          contribution: doc
+          contribution: doc,
+          hasVoted: hasUserAlreadyVotedForSubmission(request, doc)
         });
       });
     }
@@ -55,11 +77,14 @@ exports.register = function Submissions (facet, options, next) {
     method: 'GET',
     handler: function (request, reply) {
       request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
+
         if (!doc || !doc._id) {
           return reply(Hapi.error.notFound('Id not found'));
         }
+
         reply.view('interest', {
-          interest: doc
+          interest: doc,
+          hasVoted: hasUserAlreadyVotedForSubmission(request, doc)
         });
       });
     }
@@ -119,6 +144,35 @@ exports.register = function Submissions (facet, options, next) {
       payload.type = 'contribution';
       request.server.methods.saveSubmission(payload, function (err, doc) {
         reply().redirect('contributions/' + doc.id);
+      });
+    }
+  });
+
+
+  facet.route({
+    path: '/votes/{submissionId}',
+    method: 'POST',
+    handler: function (request, reply) {
+      var submissionId = request.params.submissionId,
+          votes,
+          error;
+
+      var payload = {
+        submissionId: submissionId
+      };
+
+      votes = getVotesFromCookie(request);
+
+      if (votes.indexOf(submissionId) !== -1) {
+        error = Hapi.error.badRequest();
+        reply(error);
+        return;
+      }
+
+      request.server.methods.saveVote(payload, function (err, doc) {
+        votes.push(submissionId);
+        reply({ok: true})
+          .state('votes', {votes: votes});
       });
     }
   });

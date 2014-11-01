@@ -1,4 +1,20 @@
-<h2>{{contribution.title}}</h2>
+<div ng-app="votes" ng-init="votes='{{contribution.votes}}';hasVoted={{hasVoted}};id='{{contribution._id}}'">
+  <div ng-controller="VoteController">
+    <h2>{{contribution.title}}</h2>
 
-<div>{{contribution.description}}</div>
-<div>{{contribution.name}}</div>
+    <div>{{contribution.description}}</div>
+    <div>{{contribution.name}}</div>
+
+    <div class="vote-count">
+      \{{votes}}
+    </div>
+    <form name="form" role="form" novalidate ng-submit="upvote()">
+      <button class="vote-button" ng-disabled="hasVoted">
+        UPVOTE
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="/static/bower_components/angular/angular.js"></script>
+<script src="/static/basic-theme/votes.js"></script>
