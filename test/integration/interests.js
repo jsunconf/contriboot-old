@@ -29,9 +29,9 @@ describe('Interests', function () {
       .elementByTagName('body')
       .text()
       .then(function (value) {
-         expect(value).to.contain('rocko artischocko');
-         expect(value).to.contain('rocko mag brot');
-         return expect(value).to.contain('this is the best talk');
+        expect(value).to.contain('rocko artischocko');
+        expect(value).to.contain('rocko mag brot');
+        return expect(value).to.contain('this is the best talk');
       })
       .nodeify(done);
   });

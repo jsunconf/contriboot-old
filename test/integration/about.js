@@ -21,7 +21,7 @@ describe('Impressum', function () {
       .elementByCssSelector('h2')
       .text()
       .then(function (value) {
-         return expect(value).to.equal('Impressum');
+        return expect(value).to.equal('Impressum');
       })
       .nodeify(done);
   });

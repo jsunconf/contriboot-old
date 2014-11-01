@@ -21,7 +21,7 @@ describe('Start page', function () {
       .elementByCssSelector('ul.interests a')
       .text()
       .then(function (value) {
-         return expect(value).to.equal('JS as compilation target');
+        return expect(value).to.equal('JS as compilation target');
       })
       .nodeify(done);
   });

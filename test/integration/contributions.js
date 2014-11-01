@@ -29,9 +29,9 @@ describe('Contributions', function () {
       .elementByTagName('body')
       .text()
       .then(function (value) {
-         expect(value).to.contain('Ente Ente');
-         expect(value).to.contain('Roebin');
-         return expect(value).to.contain('ES6 Features');
+        expect(value).to.contain('Ente Ente');
+        expect(value).to.contain('Roebin');
+        return expect(value).to.contain('ES6 Features');
       })
       .nodeify(done);
   });
