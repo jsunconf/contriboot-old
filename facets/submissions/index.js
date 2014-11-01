@@ -5,6 +5,12 @@ exports.register = function Submissions (facet, options, next) {
 
   facet.views(options.views);
 
+  facet.state('votes', {
+    ttl: 86400 * 1000 * 365,
+    isHttpOnly: true,
+    encoding: 'base64json'
+  });
+
   facet.route({
     path: '/',
     method: 'GET',
@@ -26,10 +32,14 @@ exports.register = function Submissions (facet, options, next) {
           return acc;
         }, {interests: [], contributions: []});
 
-        reply.view('index', {
-          interests: submissions.interests,
-          contributions: submissions.contributions
-        });
+
+
+        reply
+          .view('index', {
+            interests: submissions.interests,
+            contributions: submissions.contributions
+          })
+          .state('votes', {wurst: 'kaese'});
       });
     }
   });

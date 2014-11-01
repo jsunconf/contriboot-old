@@ -4,7 +4,10 @@ var request = require('request'),
     couch = require('./config.js').couch,
     root = 'http://' + couch.username + ':' + couch.password + '@' + couch.url.replace('http://', '') + '/',
     testDbName = couch.dbName,
-    testData = require('./test/fixtures/contribs-interests.json');
+    testDataSubmissions = require('./test/fixtures/contribs-interests.json'),
+    testDataVotes = require('./test/fixtures/votes.json'),
+    hoek = require('hoek'),
+    testData = hoek.merge(testDataSubmissions, testDataVotes);
 
 
 function createDb (cb) {

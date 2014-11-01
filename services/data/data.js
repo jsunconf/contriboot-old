@@ -29,7 +29,19 @@ exports.register = function Couch (service, couchSettings, next) {
         return next(err);
       }
 
-      return next(null, data);
+      var url = '/_design/contributions/_view/voteCountBySubmission';
+      couch.get(url + '?group=true&key="' + id + '"', function (err, cr, votesData) {
+        var voteObject = votesData.rows[0];
+        var votes = voteObject && voteObject.value || 0;
+
+        if (err || cr && cr.statusCode !== 200 || !data) {
+          return next(err);
+        }
+
+        data.votes = votes;
+
+        return next(null, data);
+      });
     });
   });
 
