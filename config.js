@@ -1,4 +1,5 @@
 var path = require('path');
+var hoek = require('hoek');
 
 var port = 8000;
 if (process.env.NODE_ENV === 'test') {
@@ -22,8 +23,11 @@ exports.server = {
 
 exports.getViewPath = getViewPath;
 function getViewPath (conf, name) {
-  conf.views.path = path.resolve(templatePath, name);
-  return conf;
+  var confCopy = hoek.clone(conf);
+
+  confCopy.views.path = path.resolve(templatePath, name);
+
+  return confCopy;
 }
 
 
