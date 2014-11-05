@@ -3,12 +3,17 @@ var Hapi = require('hapi'),
 
 exports.register = function Submissions (facet, options, next) {
 
+  function getVotesFromCookie (request) {
+    return request.state.votes && request.state.votes.votes  || [];
+  }
+
   facet.views(options.views);
 
   facet.state('votes', {
     ttl: 86400 * 1000 * 365,
     isHttpOnly: true,
-    encoding: 'base64json'
+    encoding: 'base64json',
+    path: '/'
   });
 
   facet.route({
@@ -32,14 +37,12 @@ exports.register = function Submissions (facet, options, next) {
           return acc;
         }, {interests: [], contributions: []});
 
-
-
         reply
           .view('index', {
             interests: submissions.interests,
             contributions: submissions.contributions
-          })
-          .state('votes', {wurst: 'kaese'});
+          });
+
       });
     }
   });
@@ -65,11 +68,20 @@ exports.register = function Submissions (facet, options, next) {
     method: 'GET',
     handler: function (request, reply) {
       request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
+        var votes = getVotesFromCookie(request),
+            hasVoted = false;
+
         if (!doc || !doc._id) {
           return reply(Hapi.error.notFound('Id not found'));
         }
+
+        if (votes.indexOf(doc._id) !== -1) {
+          hasVoted = true;
+        }
+
         reply.view('interest', {
-          interest: doc
+          interest: doc,
+          hasVoted: hasVoted
         });
       });
     }
@@ -129,6 +141,38 @@ exports.register = function Submissions (facet, options, next) {
       payload.type = 'contribution';
       request.server.methods.saveSubmission(payload, function (err, doc) {
         reply().redirect('contributions/' + doc.id);
+      });
+    }
+  });
+
+
+  facet.route({
+    path: '/votes/{submissionId}',
+    method: 'POST',
+    config: {
+
+    },
+    handler: function (request, reply) {
+      var submissionId = request.params.submissionId,
+          votes,
+          error;
+
+      var payload = {
+        submissionId: submissionId
+      };
+
+      votes = getVotesFromCookie(request);
+
+      if (votes.indexOf(submissionId) !== -1) {
+        error = Hapi.error.badRequest();
+        reply(error);
+        return;
+      }
+
+      request.server.methods.saveVote(payload, function (err, doc) {
+        votes.push(submissionId);
+        reply({ok: true})
+          .state('votes', {votes: votes});
       });
     }
   });

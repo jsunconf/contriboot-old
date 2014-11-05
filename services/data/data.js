@@ -55,6 +55,19 @@ exports.register = function Couch (service, couchSettings, next) {
     });
   });
 
+  service.method('saveVote', function (payload, next) {
+    payload.type = 'vote';
+
+    couch.post('/', payload, function (err, cr, data) {
+
+      if (err || cr && cr.statusCode !== 201 || !data) {
+        return next(err);
+      }
+
+      return next(null, data);
+    });
+  });
+
   next();
 };
 

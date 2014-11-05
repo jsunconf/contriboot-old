@@ -29,8 +29,28 @@ describe('Voting', function () {
       .click()
       .elementByCssSelector('.vote-count')
       .text()
+
+      // expect immediate upvote ui update
       .then(function (value) {
         return expect(value).to.equal('1');
+      })
+      .sleep(1000)
+      .refresh()
+      .elementByCssSelector('.vote-count')
+      .text()
+
+      // expect count to be 1 even after reload
+      .then(function (value) {
+        return expect(value).to.equal('1');
+      })
+
+      // expect upvote button to be disabled
+      // because users should not be able to vote the same
+      // submission more than once
+      .elementByCssSelector('.vote-button')
+      .getAttribute('disabled')
+      .then(function(value) {
+        return expect(value).to.equal('true');
       })
       .nodeify(done);
   });

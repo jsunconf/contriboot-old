@@ -2,10 +2,6 @@ var ddoc = {
   _id: '_design/contributions', views: {}, lists: {}, shows: {}
 };
 
-var ddocVotes = {
-  _id: '_design/votes', views: {}, lists: {}, shows: {}
-};
-
 // _design/contributions/_view/byType
 ddoc.views.byType = {
   map: function (doc) {
