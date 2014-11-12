@@ -152,9 +152,6 @@ exports.register = function Submissions (facet, options, next) {
   facet.route({
     path: '/votes/{submissionId}',
     method: 'POST',
-    config: {
-
-    },
     handler: function (request, reply) {
       var submissionId = request.params.submissionId,
           votes,
