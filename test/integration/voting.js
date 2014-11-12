@@ -15,10 +15,10 @@ describe('Voting', function () {
     done();
   });
 
-  it('allows to upvote an interest', helper.options, function (done) {
+  function upvoteTestForSubmissionWithTitle(title, done) {
     browser
       .get(url + '/')
-      .elementByLinkText('JS as compilation target')
+      .elementByLinkText(title)
       .click()
       .elementByCssSelector('.vote-count')
       .text()
@@ -53,5 +53,14 @@ describe('Voting', function () {
         return expect(value).to.equal('true');
       })
       .nodeify(done);
+  }
+
+  it('allows to upvote an interest', helper.options, function (done) {
+    upvoteTestForSubmissionWithTitle('JS as compilation target', done);
   });
+
+  it('allows to upvote a contribution', helper.options, function (done) {
+    upvoteTestForSubmissionWithTitle('JavaScript Patterns', done);
+  });
+
 });

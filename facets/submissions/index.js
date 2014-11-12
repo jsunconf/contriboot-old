@@ -7,6 +7,12 @@ exports.register = function Submissions (facet, options, next) {
     return request.state.votes && request.state.votes.votes  || [];
   }
 
+  function hasUserAlreadyVotedForSubmission(request, doc) {
+     var votes = getVotesFromCookie(request);
+
+     return votes.indexOf(doc._id) !== -1
+  }
+
   facet.views(options.views);
 
   facet.state('votes', {
@@ -56,8 +62,10 @@ exports.register = function Submissions (facet, options, next) {
         if (!doc || !doc._id) {
           return reply(Hapi.error.notFound('Id not found'));
         }
+
         reply.view('contribution', {
-          contribution: doc
+          contribution: doc,
+          hasVoted: hasUserAlreadyVotedForSubmission(request, doc)
         });
       });
     }
@@ -68,20 +76,14 @@ exports.register = function Submissions (facet, options, next) {
     method: 'GET',
     handler: function (request, reply) {
       request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
-        var votes = getVotesFromCookie(request),
-            hasVoted = false;
 
         if (!doc || !doc._id) {
           return reply(Hapi.error.notFound('Id not found'));
         }
 
-        if (votes.indexOf(doc._id) !== -1) {
-          hasVoted = true;
-        }
-
         reply.view('interest', {
           interest: doc,
-          hasVoted: hasVoted
+          hasVoted: hasUserAlreadyVotedForSubmission(request, doc)
         });
       });
     }
