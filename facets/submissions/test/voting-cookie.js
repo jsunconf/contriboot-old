@@ -3,16 +3,6 @@ var Lab = require('lab'),
     it = Lab.test,
     expect = Lab.expect;
 
-/*
-
-exports.hasUserAlreadyVotedForSubmission = hasUserAlreadyVotedForSubmission;
-function hasUserAlreadyVotedForSubmission (request, doc) {
-  var votes = getVotesFromCookie(request);
-
-  return votes.indexOf(doc._id) !== -1;
-}
-
-*/
 
 var submissionController = require('../index.js');
 describe('voting-cookie-handling', function () {
