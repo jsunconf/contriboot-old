@@ -10,7 +10,7 @@ exports.register = function Submissions (facet, options, next) {
   function hasUserAlreadyVotedForSubmission(request, doc) {
      var votes = getVotesFromCookie(request);
 
-     return votes.indexOf(doc._id) !== -1
+     return votes.indexOf(doc._id) !== -1;
   }
 
   facet.views(options.views);
