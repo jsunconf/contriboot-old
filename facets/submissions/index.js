@@ -1,17 +1,18 @@
 var Hapi = require('hapi'),
     Joi = require('joi');
 
+function getVotesFromCookie (request) {
+  return request.state.votes && request.state.votes.votes  || [];
+}
+
+exports.hasUserAlreadyVotedForSubmission = hasUserAlreadyVotedForSubmission;
+function hasUserAlreadyVotedForSubmission (request, doc) {
+  var votes = getVotesFromCookie(request);
+
+  return votes.indexOf(doc._id) !== -1;
+}
+
 exports.register = function Submissions (facet, options, next) {
-
-  function getVotesFromCookie (request) {
-    return request.state.votes && request.state.votes.votes  || [];
-  }
-
-  function hasUserAlreadyVotedForSubmission(request, doc) {
-     var votes = getVotesFromCookie(request);
-
-     return votes.indexOf(doc._id) !== -1;
-  }
 
   facet.views(options.views);
 

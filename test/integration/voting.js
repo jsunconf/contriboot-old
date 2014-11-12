@@ -15,7 +15,7 @@ describe('Voting', function () {
     done();
   });
 
-  function upvoteTestForSubmissionWithTitle(title, done) {
+  function upvoteTestForSubmissionWithTitle (title, done) {
     browser
       .get(url + '/')
       .elementByLinkText(title)
@@ -62,5 +62,4 @@ describe('Voting', function () {
   it('allows to upvote a contribution', helper.options, function (done) {
     upvoteTestForSubmissionWithTitle('JavaScript Patterns', done);
   });
-
 });
