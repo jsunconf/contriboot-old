@@ -13,6 +13,14 @@
         UPVOTE
       </button>
     </form>
+    <a href="/contributions/new?respondTo={{interest._id}}" class="respond-with-talk">Respond with contribution</a>
+    {{#if responses}}
+      {{#each responses}}
+        <div class="response-to-interest">
+          <a href="/contributions/{{this.value._id}}">{{this.value.title}}</a>
+        </div>
+      {{/each}}
+    {{/if}}
   </div>
 </div>
 

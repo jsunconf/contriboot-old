@@ -22,9 +22,14 @@ before(function (done) {
       views: config.server.views
     }, 'submissions')
   }, done);
-  // mock couch call
+
+  // mock couch calls
   server.methods.getSubmissionById = function (id, next) {
     return next(null, fakeData.rows[5].value);
+  };
+
+  server.methods.getResponsesForInterest = function (id, next) {
+    return next(null, []);
   };
 });
 

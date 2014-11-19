@@ -72,13 +72,17 @@ describe('contributions', function () {
   });
 
   describe('validations', function () {
-    function testWithEmptyField (fieldName, done) {
-      var payload = {
+    function getPayload () {
+      return {
         title: 'sdfdfdsfgdsfg',
         name: 'sdfdfdsfgdsfg',
-        description: 'dsfgdfsgdfsg'
+        description: 'dsfgdfsgdfsg',
+        interest: 'foobar'
       };
+    }
 
+    function testWithEmptyField (fieldName, done) {
+      var payload = getPayload();
       payload[fieldName] = '';
 
       server.inject({
@@ -102,6 +106,19 @@ describe('contributions', function () {
 
     it('a name is required', function (done) {
       testWithEmptyField('name', done);
+    });
+
+    it('an interest is not required', function (done) {
+      var payload = getPayload();
+      delete payload.interest;
+      server.inject({
+        url: '/contributions/',
+        method: 'POST',
+        payload: payload
+      }, function (resp) {
+        expect(resp.statusCode).to.equal(302);
+        done();
+      });
     });
   });
 });

@@ -72,13 +72,17 @@ describe('interests', function () {
   });
 
   describe('validations', function () {
-    function testWithEmptyField (fieldName, done) {
-      var payload = {
+    function getPayload () {
+      return {
         title: 'sdfdfdsfgdsfg',
         name: 'sdfdfdsfgdsfg',
-        description: 'dsfgdfsgdfsg'
+        description: 'dsfgdfsgdfsg',
+        interest: 'foobar'
       };
+    }
 
+    function testWithEmptyField (fieldName, done) {
+      var payload = getPayload();
       payload[fieldName] = '';
 
       server.inject({

@@ -1,4 +1,9 @@
 <div ng-app>
+  {{#if responseToInterest}}
+    <div class="respond-to-interest">
+      {{responseToInterest.title}}
+    </div>
+  {{/if}}
   <form method="POST" action="/{{type}}/" name="form" role="form" novalidate>
     <div class="form-group">
       <label for="title">Title</label>
@@ -14,6 +19,10 @@
       <label for="description">Description</label>
       <textarea ng-required="true" ng-model="submission.description" name="description" class="form-control"></textarea>
     </div>
+
+    {{#if responseToInterest}}
+      <input name="interest" type="hidden" value="{{responseToInterest._id}}"></input>
+    {{/if}}
 
     <button class="btn btn-primary" ng-disabled="form.$invalid">Submit</button>
   </form>

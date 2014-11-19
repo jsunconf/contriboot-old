@@ -5,7 +5,8 @@ var helper = require('./helpers/helper.js'),
     it = Lab.test,
     before = Lab.before,
     after = Lab.after,
-    expect = Lab.expect;
+    expect = Lab.expect,
+    fillOutSubmission = require('./helpers/fill-out-submission.js');
 
 
 describe('Contributions', function () {
@@ -16,16 +17,9 @@ describe('Contributions', function () {
   });
 
   it('allows to add Contributions', helper.options, function (done) {
-    browser
-      .get(url + '/contributions/new')
-      .elementByName('title')
-      .sendKeys('Ente Ente')
-      .elementByName('name')
-      .sendKeys('Roebin')
-      .elementByName('description')
-      .sendKeys('ES6 Features')
-      .elementByTagName('button')
-      .click()
+    var b = browser.get(url + '/contributions/new');
+
+    fillOutSubmission(b)
       .elementByTagName('body')
       .text()
       .then(function (value) {

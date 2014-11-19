@@ -58,10 +58,21 @@ exports.register = function Submissions (facet, options, next) {
     path: '/contributions/{id}',
     method: 'GET',
     handler: function (request, reply) {
-      request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
 
+      request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
         if (!doc || !doc._id) {
           return reply(Hapi.error.notFound('Id not found'));
+        }
+
+        if (doc.responseTo) {
+          request.server.methods.getSubmissionById(doc.responseTo, function (err, respondToDoc) {
+            reply.view('contribution', {
+              contribution: doc,
+              hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
+              respondToDoc: {title: respondToDoc.title}
+            });
+          });
+          return;
         }
 
         reply.view('contribution', {
@@ -82,9 +93,12 @@ exports.register = function Submissions (facet, options, next) {
           return reply(Hapi.error.notFound('Id not found'));
         }
 
-        reply.view('interest', {
-          interest: doc,
-          hasVoted: hasUserAlreadyVotedForSubmission(request, doc)
+        request.server.methods.getResponsesForInterest(doc._id, function (err, responses) {
+          reply.view('interest', {
+            interest: doc,
+            hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
+            responses: responses
+          });
         });
       });
     }
@@ -94,7 +108,14 @@ exports.register = function Submissions (facet, options, next) {
     path: '/contributions/new',
     method: 'GET',
     handler: function (request, reply) {
-      reply.view('submit', {type: 'contributions'});
+      var interestId = request.query.respondTo;
+
+      request.server.methods.getSubmissionById(interestId, function (err, interest) {
+        reply.view('submit', {
+          responseToInterest: interest,
+          type: 'contributions'
+        });
+      });
     }
   });
 
@@ -135,13 +156,17 @@ exports.register = function Submissions (facet, options, next) {
         payload: {
           title: Joi.string().min(3),
           name: Joi.string().min(1),
-          description: Joi.string().min(10)
+          description: Joi.string().min(10),
+          interest: Joi.string().optional()
         }
       }
     },
     handler: function (request, reply) {
       var payload = request.payload;
       payload.type = 'contribution';
+      if (payload.interest) {
+        payload.responseTo = payload.interest;
+      }
       request.server.methods.saveSubmission(payload, function (err, doc) {
         reply().redirect('contributions/' + doc.id);
       });

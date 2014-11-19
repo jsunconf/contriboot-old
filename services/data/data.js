@@ -23,6 +23,17 @@ exports.register = function Couch (service, couchSettings, next) {
     });
   });
 
+  service.method('getResponsesForInterest', function (id, next) {
+    var url = '/_design/contributions/_view/getResponsesForInterest';
+    couch.get(url + '?key="' + id + '"', function (err, cr, data) {
+      if (err || cr && cr.statusCode !== 200 || !data) {
+        return next(err);
+      }
+
+      next(null, data.rows);
+    });
+  });
+
   service.method('getSubmissionById', function (id, next) {
     couch.get('/' + id, function (err, cr, data) {
       if (err || cr && cr.statusCode !== 200 || !data) {

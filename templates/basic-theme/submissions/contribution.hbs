@@ -1,5 +1,6 @@
 <div ng-app="votes" ng-init="votes='{{contribution.votes}}';hasVoted={{hasVoted}};id='{{contribution._id}}'">
   <div ng-controller="VoteController">
+
     <h2>{{contribution.title}}</h2>
 
     <div>{{contribution.description}}</div>
@@ -14,6 +15,12 @@
       </button>
     </form>
   </div>
+  {{#if respondToDoc}}
+    <h3>This contribution is a repsonse to:</h3>
+    <div class="respond-to-doc">
+      {{respondToDoc.title}}
+    </div>
+  {{/if}}
 </div>
 
 <script src="/static/bower_components/angular/angular.js"></script>
