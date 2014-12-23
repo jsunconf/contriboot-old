@@ -2,7 +2,8 @@ var Hapi = require('hapi'),
     config = require('./config.js'),
     getViewPath = config.getViewPath;
 
-var server = Hapi.createServer(config.host, config.port, config.server);
+var server = Hapi.createServer(config.host, config.port);
+server.views(config.server.views);
 
 server.route({
   path: '/static/{path*}',

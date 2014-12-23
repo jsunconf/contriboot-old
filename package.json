@@ -27,7 +27,7 @@
   "dependencies": {
     "couch-login": "^1.0.0",
     "handlebars": "^2.0.0-alpha.4",
-    "hapi": "~6.0.2",
+    "hapi": "~7.5.3",
     "hoek": "^2.3.0",
     "joi": "^4.6.1",
     "request": "^2.36.0"
