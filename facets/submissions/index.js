@@ -1,4 +1,4 @@
-var Hapi = require('hapi'),
+var Boom = require('boom'),
     Joi = require('joi');
 
 function getVotesFromCookie (request) {
@@ -61,7 +61,7 @@ exports.register = function Submissions (facet, options, next) {
 
       request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
         if (!doc || !doc._id) {
-          return reply(Hapi.error.notFound('Id not found'));
+          return reply(Boom.notFound('Id not found'));
         }
 
         if (doc.responseTo) {
@@ -90,7 +90,7 @@ exports.register = function Submissions (facet, options, next) {
       request.server.methods.getSubmissionById(request.params.id, function (err, doc) {
 
         if (!doc || !doc._id) {
-          return reply(Hapi.error.notFound('Id not found'));
+          return reply(Boom.notFound('Id not found'));
         }
 
         request.server.methods.getResponsesForInterest(doc._id, function (err, responses) {
@@ -143,7 +143,7 @@ exports.register = function Submissions (facet, options, next) {
       var payload = request.payload;
       payload.type = 'interest';
       request.server.methods.saveSubmission(payload, function (err, doc) {
-        reply().redirect('interests/' + doc.id);
+        reply().redirect('/interests/' + doc.id);
       });
     }
   });
@@ -168,7 +168,7 @@ exports.register = function Submissions (facet, options, next) {
         payload.responseTo = payload.interest;
       }
       request.server.methods.saveSubmission(payload, function (err, doc) {
-        reply().redirect('contributions/' + doc.id);
+        reply().redirect('/contributions/' + doc.id);
       });
     }
   });
@@ -189,7 +189,7 @@ exports.register = function Submissions (facet, options, next) {
       votes = getVotesFromCookie(request);
 
       if (votes.indexOf(submissionId) !== -1) {
-        error = Hapi.error.badRequest();
+        error = Boom.badRequest();
         reply(error);
         return;
       }

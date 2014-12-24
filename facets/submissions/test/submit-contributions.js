@@ -11,9 +11,10 @@ var Hapi = require('hapi'),
 
 var server;
 before(function (done) {
-  server = Hapi.createServer();
-  server.pack.register({
-    plugin: submissions,
+  server = new Hapi.Server();
+  server.connection();
+  server.register({
+    register: submissions,
     options: getViewPath({
       views: config.server.views
     }, 'submissions')

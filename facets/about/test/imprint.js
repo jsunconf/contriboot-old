@@ -13,9 +13,10 @@ var options = {url: '/imprint'},
     server;
 
 before(function (done) {
-  server = Hapi.createServer();
-  server.pack.register({
-    plugin: about,
+  server = new Hapi.Server();
+  server.connection();
+  server.register({
+    register: about,
     options: getViewPath({
       views: config.server.views
     }, 'about')
@@ -25,8 +26,7 @@ before(function (done) {
 describe('Imprint', function () {
   it('is routed properly', function (done) {
     var table = server.table();
-
-    expect(table[0].settings.path).to.equal('/imprint');
+    expect(table[0].table[0].path).to.equal('/imprint');
     done();
   });
 
