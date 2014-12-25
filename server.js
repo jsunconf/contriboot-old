@@ -34,7 +34,9 @@ function bootServer (cb) {
     Scooter,
     {
       register: Blankie,
-      options: {}
+      options: {
+        fontSrc: 'self'
+      }
     },
     {
       register: require('./facets/about'),
