@@ -260,6 +260,14 @@ exports.register = function Submissions (facet, options, next) {
     }
   });
 
+  facet.route({
+    path: '/faq',
+    method: 'GET',
+    handler: function (request, reply) {
+      reply.view('faq');
+    }
+  });
+
   next();
 };
 
