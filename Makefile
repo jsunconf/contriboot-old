@@ -5,6 +5,7 @@ jshint:
 
 unit:
 	npm i
+	./node_modules/lab/bin/lab ./test/unit
 	cd ./facets/about && npm i && npm test
 	cd ./facets/submissions && npm i && npm test
 	cd ./services/data && npm i && npm test
