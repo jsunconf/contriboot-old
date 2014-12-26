@@ -135,7 +135,8 @@ exports.register = function Submissions (facet, options, next) {
         payload: {
           title: Joi.string().min(3),
           name: Joi.string().min(1),
-          description: Joi.string().min(10)
+          description: Joi.string().min(10),
+          twittername: Joi.string().optional().allow(''),
         }
       }
     },
@@ -157,7 +158,8 @@ exports.register = function Submissions (facet, options, next) {
           title: Joi.string().min(3),
           name: Joi.string().min(1),
           description: Joi.string().min(10),
-          interest: Joi.string().optional()
+          interest: Joi.string().optional(),
+          twittername: Joi.string().optional().allow(''),
         }
       }
     },

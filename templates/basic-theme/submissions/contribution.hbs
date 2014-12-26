@@ -6,6 +6,9 @@
     <div>{{contribution.description}}</div>
     <div>{{contribution.name}}</div>
 
+    {{#if contribution.twittername}}
+      <a href="http://twitter.com/{{contribution.twittername}}">@{{contribution.twittername}}</a>
+    {{/if}}
     <div class="vote-count">
       \{{votes}}
     </div>

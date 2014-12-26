@@ -78,7 +78,7 @@ describe('interests', function () {
         title: 'sdfdfdsfgdsfg',
         name: 'sdfdfdsfgdsfg',
         description: 'dsfgdfsgdfsg',
-        interest: 'foobar'
+        twittername: 'robinson_k'
       };
     }
 
@@ -107,6 +107,19 @@ describe('interests', function () {
 
     it('a name is required', function (done) {
       testWithEmptyField('name', done);
+    });
+
+    it('a twitter username is not required', function (done) {
+      var payload = getPayload();
+      delete payload.twittername;
+      server.inject({
+        url: '/interests/',
+        method: 'POST',
+        payload: payload
+      }, function (resp) {
+        expect(resp.statusCode).to.equal(302);
+        done();
+      });
     });
   });
 });

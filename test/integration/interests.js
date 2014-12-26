@@ -5,7 +5,8 @@ var helper = require('./helpers/helper.js'),
     it = Lab.test,
     before = Lab.before,
     after = Lab.after,
-    expect = Lab.expect;
+    expect = Lab.expect,
+    fillOutSubmission = require('./helpers/fill-out-submission-without-twittername.js');
 
 
 describe('Interests', function () {
@@ -32,6 +33,22 @@ describe('Interests', function () {
         expect(value).to.contain('rocko artischocko');
         expect(value).to.contain('rocko mag brot');
         return expect(value).to.contain('this is the best talk');
+      })
+      .nodeify(done);
+  });
+
+  it('allows to add twitter usernames', helper.options, function (done) {
+    var browserInstance = browser.get(url + '/interests/new');
+
+    browserInstance
+      .elementByName('twittername')
+      .sendKeys('robinson_k');
+
+    fillOutSubmission(browserInstance)
+      .elementByTagName('body')
+      .text()
+      .then(function (value) {
+        return expect(value).to.contain('@robinson_k');
       })
       .nodeify(done);
   });

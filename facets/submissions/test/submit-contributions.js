@@ -78,7 +78,8 @@ describe('contributions', function () {
         title: 'sdfdfdsfgdsfg',
         name: 'sdfdfdsfgdsfg',
         description: 'dsfgdfsgdfsg',
-        interest: 'foobar'
+        interest: 'foobar',
+        twittername: 'robinson_k'
       };
     }
 
@@ -112,6 +113,19 @@ describe('contributions', function () {
     it('an interest is not required', function (done) {
       var payload = getPayload();
       delete payload.interest;
+      server.inject({
+        url: '/contributions/',
+        method: 'POST',
+        payload: payload
+      }, function (resp) {
+        expect(resp.statusCode).to.equal(302);
+        done();
+      });
+    });
+
+    it('a twitter username is not required', function (done) {
+      var payload = getPayload();
+      delete payload.twittername;
       server.inject({
         url: '/contributions/',
         method: 'POST',

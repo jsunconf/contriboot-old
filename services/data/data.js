@@ -2,11 +2,15 @@ var CouchLogin = require('couch-login'),
     sanitizer = require('sanitizer');
 
 
-exports.sanitizePayLoad = sanitizePayLoad;
-function sanitizePayLoad (payload) {
+exports.sanitizeSubmissionPayLoad = sanitizeSubmissionPayLoad;
+function sanitizeSubmissionPayLoad (payload) {
   Object.keys(payload).forEach(function (key) {
     payload[key] = sanitizer.sanitize(payload[key]);
   });
+
+  if (payload.twittername) {
+    payload.twittername = payload.twittername.replace(/@/ig, '');
+  }
 
   return payload;
 }
@@ -68,7 +72,7 @@ exports.register = function Couch (service, couchSettings, next) {
   });
 
   service.method('saveSubmission', function (payload, next) {
-    payload = sanitizePayLoad(payload);
+    payload = sanitizeSubmissionPayLoad(payload);
 
     couch.post('/', payload, function (err, cr, data) {
       if (err || cr && cr.statusCode !== 201 || !data) {

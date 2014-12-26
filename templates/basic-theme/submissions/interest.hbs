@@ -4,6 +4,9 @@
 
     <div>{{interest.description}}</div>
     <div>{{interest.name}}</div>
+    {{#if interest.twittername}}
+      <a href="http://twitter.com/{{interest.twittername}}">@{{interest.twittername}}</a>
+    {{/if}}
 
     <div class="vote-count">
       \{{votes}}
