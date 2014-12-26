@@ -59,7 +59,7 @@ function deleteDb (cb) {
 }
 
 function createViews (cb) {
-  couchApp.createApp(require('./data/views.js'), root + testDbName, function (doc) {
+  couchApp.createApp(require('./couch-data/views.js'), root + testDbName, function (doc) {
     doc.push();
     cb && cb();
   });
