@@ -1,4 +1,15 @@
-var CouchLogin = require('couch-login');
+var CouchLogin = require('couch-login'),
+    sanitizer = require('sanitizer');
+
+
+exports.sanitizePayLoad = sanitizePayLoad;
+function sanitizePayLoad (payload) {
+  Object.keys(payload).forEach(function (key) {
+    payload[key] = sanitizer.sanitize(payload[key]);
+  });
+
+  return payload;
+}
 
 exports.register = function Couch (service, couchSettings, next) {
   var auth = {
@@ -57,6 +68,8 @@ exports.register = function Couch (service, couchSettings, next) {
   });
 
   service.method('saveSubmission', function (payload, next) {
+    payload = sanitizePayLoad(payload);
+
     couch.post('/', payload, function (err, cr, data) {
       if (err || cr && cr.statusCode !== 201 || !data) {
         return next(err);

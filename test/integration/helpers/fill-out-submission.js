@@ -1,10 +1,14 @@
-module.exports = function (browser) {
+module.exports = function (browser, values) {
+  if (!values) {
+    values = {};
+  }
+
   return browser.elementByName('title')
-    .sendKeys('Ente Ente')
+    .sendKeys(values.title || 'Ente Ente')
     .elementByName('name')
-    .sendKeys('Roebin')
+    .sendKeys(values.name || 'Roebin')
     .elementByName('description')
-    .sendKeys('ES6 Features')
+    .sendKeys(values.description || 'ES6 Features')
     .elementByTagName('button')
     .click();
 };

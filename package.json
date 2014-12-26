@@ -31,7 +31,8 @@
     "hapi": "~8.0.0",
     "hoek": "^2.3.0",
     "joi": "^4.6.1",
-    "request": "^2.36.0"
+    "request": "^2.36.0",
+    "sanitizer": "~0.1.2"
   },
   "devDependencies": {
     "async-minihelper": "^1.0.0",

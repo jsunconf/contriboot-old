@@ -7,6 +7,7 @@ unit:
 	npm i
 	cd ./facets/about && npm i && npm test
 	cd ./facets/submissions && npm i && npm test
+	cd ./services/data && npm i && npm test
 
 integration:
 	./download-selenium.sh
