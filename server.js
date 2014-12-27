@@ -30,6 +30,32 @@ function bootServer (cb) {
     }
   });
 
+  server.ext('onPreResponse', function (request, reply) {
+    var response = request.response,
+        code,
+        error,
+        msg;
+
+    if (!response.isBoom) {
+      return reply.continue();
+    }
+
+    error = response;
+
+    code = error.output.statusCode;
+
+    switch (code) {
+      case 404:
+        msg = '404 Page not found! So sad that this page does not exist :(';
+        break;
+      case 500:
+        msg = 'Something went wrong :(';
+        break;
+    }
+
+    return reply.view('error', {msg: msg}).code(code);
+  });
+
   server.register([
     Scooter,
     {

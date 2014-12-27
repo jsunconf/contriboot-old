@@ -1,3 +1,4 @@
+
 var Lab = require('lab'),
     describe = Lab.experiment,
     before = Lab.before,
@@ -22,10 +23,11 @@ describe('Server', function () {
     server.stop(done);
   });
 
-  it('sends csp headers', function (done) {
-    request('http://' + config.host + ':' + config.port, function (err, res, body) {
-      expect(res.headers['content-security-policy'])
-        .to.equal("default-src 'none';script-src 'self';style-src 'self';img-src 'self';connect-src 'self';font-src 'self'");
+  it('returns an error page with a 404 status code', function (done) {
+    var url = 'http://' + config.host + ':' + config.port + '/i-will-never-exist';
+    request(url, function (err, res, body) {
+      expect(res.statusCode).to.equal(404);
+      expect(body).to.contain('class="error-msg');
       done();
     });
   });

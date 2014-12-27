@@ -39,6 +39,7 @@ exports.server = {
     engines: {
       hbs: require('handlebars')
     },
+    path: templatePath,
     layoutPath: templatePath,
     layout: true
   }
