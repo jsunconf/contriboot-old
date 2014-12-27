@@ -45,4 +45,17 @@ describe('Contributions', function () {
       })
       .nodeify(done);
   });
+
+  it('the user gets a tweet button', helper.options, function (done) {
+    var b = browser.get(url + '/contributions/new');
+
+    fillOutSubmission(b)
+      .elementByCssSelector('.tweetlink')
+      .getAttribute('href')
+      .then(function (value) {
+        expect(value).to.not.contain('undefined');
+        return expect(value).to.contain('I%20submitted%20a%20talk%20for%20JS%20Unconf%3A%20http%3A%2F%2Fcontribs.jsunconf.eu%2Fcontributions');
+      })
+    .nodeify(done);
+  });
 });

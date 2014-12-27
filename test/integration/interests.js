@@ -17,22 +17,15 @@ describe('Interests', function () {
   });
 
   it('allows to add interests', helper.options, function (done) {
-    browser
-      .get(url + '/interests/new')
-      .elementByName('title')
-      .sendKeys('rocko mag brot')
-      .elementByName('name')
-      .sendKeys('rocko artischocko')
-      .elementByName('description')
-      .sendKeys('this is the best talk')
-      .elementByTagName('button')
-      .click()
+    var b = browser.get(url + '/interests/new');
+
+    fillOutSubmission(b)
       .elementByTagName('body')
       .text()
       .then(function (value) {
-        expect(value).to.contain('rocko artischocko');
-        expect(value).to.contain('rocko mag brot');
-        return expect(value).to.contain('this is the best talk');
+        expect(value).to.contain('Ente Ente');
+        expect(value).to.contain('Roebin');
+        return expect(value).to.contain('ES6 Features');
       })
       .nodeify(done);
   });
@@ -51,5 +44,18 @@ describe('Interests', function () {
         return expect(value).to.contain('@robinson_k');
       })
       .nodeify(done);
+  });
+
+  it('the user gets a tweet button', helper.options, function (done) {
+    var b = browser.get(url + '/interests/new');
+
+    fillOutSubmission(b)
+      .elementByCssSelector('.tweetlink')
+      .getAttribute('href')
+      .then(function (value) {
+        expect(value).to.not.contain('undefined');
+        return expect(value).to.contain('I%20submitted%20an%20interest%20for%20JS%20Unconf%3A%20http%3A%2F%2Fcontribs.jsunconf.eu%2Finterests');
+      })
+    .nodeify(done);
   });
 });

@@ -4,8 +4,13 @@
 
     <div>{{interest.description}}</div>
     <div>{{interest.name}}</div>
+
     {{#if interest.twittername}}
       <a href="http://twitter.com/{{interest.twittername}}">@{{interest.twittername}}</a>
+    {{/if}}
+
+    {{#if tweetText}}
+      <a class="tweetlink" href="http://twitter.com/home?status={{tweetText}}">Tweet about your talk!</a>
     {{/if}}
 
     <div class="vote-count">

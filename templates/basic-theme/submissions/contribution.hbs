@@ -9,6 +9,11 @@
     {{#if contribution.twittername}}
       <a href="http://twitter.com/{{contribution.twittername}}">@{{contribution.twittername}}</a>
     {{/if}}
+
+    {{#if tweetText}}
+      <a class="tweetlink" href="http://twitter.com/home?status={{tweetText}}">Tweet about your talk!</a>
+    {{/if}}
+
     <div class="vote-count">
       \{{votes}}
     </div>

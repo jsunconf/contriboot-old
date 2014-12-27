@@ -9,6 +9,8 @@ if (process.env.NODE_ENV === 'test') {
 exports.port = process.env.PORT || port;
 exports.host = 'localhost';
 exports.theme = 'basic-theme';
+exports.domain = 'http://contribs.jsunconf.eu';
+exports.eventname = 'JS Unconf';
 
 var templatePath = path.resolve(__dirname, 'templates', exports.theme);
 exports.server = {

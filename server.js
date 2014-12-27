@@ -39,12 +39,16 @@ function bootServer (cb) {
     {
       register: require('./facets/about'),
       options: getViewPath({
+        domain: config.domain,
+        eventname: config.eventname,
         views: config.server.views
       }, 'about')
     },
     {
       register: require('./facets/submissions'),
       options: getViewPath({
+        domain: config.domain,
+        eventname: config.eventname,
         views: config.server.views
       }, 'submissions')
     },

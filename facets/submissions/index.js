@@ -1,8 +1,13 @@
 var Boom = require('boom'),
-    Joi = require('joi');
+    Joi = require('joi'),
+    qs = require('querystring');
 
 function getVotesFromCookie (request) {
-  return request.state.votes && request.state.votes.votes  || [];
+  return request.state.votes && request.state.votes.votes || [];
+}
+
+function getCreatedFromCookie (request) {
+  return request.state.created && request.state.created.created || [];
 }
 
 exports.hasUserAlreadyVotedForSubmission = hasUserAlreadyVotedForSubmission;
@@ -12,11 +17,48 @@ function hasUserAlreadyVotedForSubmission (request, doc) {
   return votes.indexOf(doc._id) !== -1;
 }
 
+
+function getTweetText (domain, id, eventname, type) {
+  var tweetText,
+      url;
+
+  if (type === 'interest') {
+    url = domain + '/interests/' + id;
+    tweetText = 'I submitted an interest for ' + eventname + ': ' + url;
+  }
+
+  if (type === 'contribution') {
+    url = domain + '/contributions/' + id;
+    tweetText = 'I submitted a talk for ' + eventname + ': ' + url;
+  }
+
+
+  tweetText = qs.escape(tweetText);
+
+  return tweetText;
+}
+
+function getTweetTextOrNull (request, domain, id, eventname, type) {
+  var created = getCreatedFromCookie(request);
+  if (created.indexOf(id) !== -1) {
+    return getTweetText(domain, id, eventname, type);
+  }
+
+  return null;
+}
+
 exports.register = function Submissions (facet, options, next) {
 
   facet.views(options.views);
 
   facet.state('votes', {
+    ttl: 86400 * 1000 * 365,
+    isHttpOnly: true,
+    encoding: 'base64json',
+    path: '/'
+  });
+
+  facet.state('created', {
     ttl: 86400 * 1000 * 365,
     isHttpOnly: true,
     encoding: 'base64json',
@@ -68,6 +110,7 @@ exports.register = function Submissions (facet, options, next) {
           request.server.methods.getSubmissionById(doc.responseTo, function (err, respondToDoc) {
             reply.view('contribution', {
               contribution: doc,
+              tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname, 'contribution'),
               hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
               respondToDoc: {title: respondToDoc.title}
             });
@@ -77,7 +120,8 @@ exports.register = function Submissions (facet, options, next) {
 
         reply.view('contribution', {
           contribution: doc,
-          hasVoted: hasUserAlreadyVotedForSubmission(request, doc)
+          hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
+          tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname,  'contribution')
         });
       });
     }
@@ -97,6 +141,7 @@ exports.register = function Submissions (facet, options, next) {
           reply.view('interest', {
             interest: doc,
             hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
+            tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname, 'interest'),
             responses: responses
           });
         });
@@ -144,7 +189,12 @@ exports.register = function Submissions (facet, options, next) {
       var payload = request.payload;
       payload.type = 'interest';
       request.server.methods.saveSubmission(payload, function (err, doc) {
-        reply().redirect('/interests/' + doc.id);
+        var created = getCreatedFromCookie(request);
+        created.push(doc.id);
+
+        reply()
+          .redirect('/interests/' + doc.id)
+          .state('created', {created: created});
       });
     }
   });
@@ -164,13 +214,19 @@ exports.register = function Submissions (facet, options, next) {
       }
     },
     handler: function (request, reply) {
-      var payload = request.payload;
+      var payload = request.payload,
+          created;
       payload.type = 'contribution';
       if (payload.interest) {
         payload.responseTo = payload.interest;
       }
       request.server.methods.saveSubmission(payload, function (err, doc) {
-        reply().redirect('/contributions/' + doc.id);
+        created = getCreatedFromCookie(request);
+        created.push(doc.id);
+
+        reply()
+          .redirect('/contributions/' + doc.id)
+          .state('created', {created: created});
       });
     }
   });

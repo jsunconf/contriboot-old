@@ -35,6 +35,34 @@ describe('Respond to interest', function () {
         .then(function (value) {
           return expect(value).to.contain('This interest gets a response');
         })
+        .elementByCssSelector('body')
+        .text()
+        .then(function (value) {
+          return expect(value).to.contain('Ente Ente');
+        })
+      .nodeify(done);
+  });
+
+  it('the user gets a tweet button', helper.options, function (done) {
+    var b = browser
+      .get(url + '/')
+      .elementByLinkText('This interest gets a response')
+      .click()
+      .elementByCssSelector('.respond-with-talk')
+      .click()
+      .elementByCssSelector('.respond-to-interest')
+      .text()
+      .then(function (value) {
+        return expect(value).to.contain('This interest gets a response');
+      });
+
+      fillOutSubmission(b)
+        .elementByCssSelector('.tweetlink')
+        .getAttribute('href')
+        .then(function (value) {
+          expect(value).to.not.contain('undefined');
+          return expect(value).to.contain('I%20submitted%20a%20talk%20for%20JS%20Unconf%3A%20http%3A%2F%2Fcontribs.jsunconf.eu%2Fcontributions');
+        })
       .nodeify(done);
   });
 });
