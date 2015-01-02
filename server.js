@@ -35,6 +35,11 @@ function bootServer (cb) {
     {
       register: Blankie,
       options: {
+        defaultSrc: 'none',
+        scriptSrc: 'self',
+        styleSrc: 'self',
+        imgSrc: 'self',
+        connectSrc: 'self',
         fontSrc: 'self'
       }
     },

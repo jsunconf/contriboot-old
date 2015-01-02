@@ -24,7 +24,7 @@ describe('Server', function () {
   it('sends csp headers', function (done) {
     request('http://' + config.host + ':' + config.port, function (err, res, body) {
       expect(res.headers['content-security-policy'])
-        .to.equal("default-src 'none';script-src 'self';style-src 'self';img-src 'self';connect-src 'self'");
+        .to.equal("default-src 'none';script-src 'self';style-src 'self';img-src 'self';connect-src 'self';font-src 'self'");
       done();
     });
   });
