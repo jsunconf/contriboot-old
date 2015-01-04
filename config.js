@@ -6,11 +6,32 @@ if (process.env.NODE_ENV === 'test') {
   port = 8001;
 }
 
-exports.port = process.env.PORT || port;
-exports.host = 'localhost';
-exports.theme = 'basic-theme';
-exports.domain = 'http://contribs.jsunconf.eu';
-exports.eventname = 'JS Unconf';
+var config = {
+  couch: {
+    url: 'http://127.0.0.1:5984',
+    username: 'admin',
+    password: 'admin',
+    dbName: 'contriboot_dev'
+  },
+  app: {
+    port: port,
+    host: 'localhost',
+    theme: 'basic-theme',
+    domain: 'http://contribs.jsunconf.eu',
+    eventname: 'JS Unconf'
+  }
+};
+
+if (process.env.NODE_ENV === 'production') {
+  config = hoek.merge(config, require('config-production.js'));
+}
+
+exports.port = config.app.port;
+exports.host = config.app.host;
+exports.theme = config.app.theme;
+exports.domain = config.app.domain;
+exports.eventname = config.app.eventname;
+exports.couch = config.couch;
 
 var templatePath = path.resolve(__dirname, 'templates', exports.theme);
 exports.server = {
@@ -31,11 +52,3 @@ function getViewPath (conf, name) {
 
   return confCopy;
 }
-
-
-exports.couch = {
-  url: process.env.COUCH_URL || 'http://127.0.0.1:5984',
-  username: process.env.COUCH_USERNAME || 'admin',
-  password: process.env.COUCH_PASSWORD || 'admin',
-  dbName: process.env.COUCH_DBNAME || 'contriboot_dev'
-};

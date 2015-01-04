@@ -1,0 +1,15 @@
+var config = {
+  couch: {
+    url: 'http://127.0.0.1:5984',
+    username: 'admin',
+    password: 'admin',
+    dbName: 'contriboot_dev'
+  },
+  app: {
+    port: 80,
+    host: 'localhost',
+    theme: 'basic-theme',
+    domain: 'http://contribs.jsunconf.eu',
+    eventname: 'JS Unconf'
+  }
+};

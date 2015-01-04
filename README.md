@@ -26,3 +26,23 @@ The templates for the facets are located in `/templates`. You can
 set your template in the `config.js`.
 
 The css/less and JavaScript for the themes is located in `/static`.
+
+## Deployment
+
+```
+npm install -g couchapp
+```
+
+Before deployment, run
+
+```shell
+cp config-production.js-dist config-production.js
+```
+
+and adjust it to your needs.
+
+### Setting up app servers
+`ansible-playbook -i private/production app-server.yml`
+
+### Deployment
+`ansible-playbook -i private/production deploy-app-server.yml`
