@@ -1,5 +1,5 @@
 ---
-- hosts: vagrantgroup
+- hosts: app
   vars_files:
     - vars.yml
 

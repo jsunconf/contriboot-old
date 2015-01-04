@@ -1,7 +1,7 @@
 ---
 
 - name: prepare app server
-  hosts: vagrantgroup
+  hosts: app
   vars_files:
     - vars.yml
   sudo: yes

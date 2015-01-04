@@ -1,7 +1,7 @@
 ---
 
 - name: install couchdb
-  hosts: vagrantgroup
+  hosts: app
   sudo: yes
   user: root
 
