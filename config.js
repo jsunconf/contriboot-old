@@ -23,7 +23,7 @@ var config = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  config = hoek.merge(config, require('config-production.js'));
+  config = hoek.merge(config, require('./config-production.js'));
 }
 
 exports.port = config.app.port;
