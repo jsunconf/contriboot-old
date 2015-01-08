@@ -11,10 +11,27 @@ coverage.html
 *.iml
 lib-cov
 
-node_modules
 selenium-server-standalone-*.jar
 static/basic-theme/css/*.css
 
 .vagrant
 config-production.js
 provisioning/private/*
+
+node_modules/async-minihelper
+node_modules/colors
+node_modules/couchapp
+node_modules/gulp
+node_modules/gulp-less
+node_modules/gulp-nodemon
+node_modules/jshint
+node_modules/lab
+node_modules/wd
+node_modules/request
+
+facets/about/node_modules/lab
+facets/about/node_modules/.bin/lab
+facets/submissions/node_modules/lab
+facets/submissions/node_modules/.bin/lab
+services/data/node_modules/lab
+services/data/node_modules/.bin/lab
