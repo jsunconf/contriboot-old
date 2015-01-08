@@ -23,7 +23,7 @@ function bootServer (cb) {
     method: 'GET',
     handler: {
       directory: {
-        path: './static',
+        path: __dirname + '/static/',
         listing: false,
         index: false
       }
