@@ -29,17 +29,48 @@ The css/less and JavaScript for the themes is located in `/static`.
 
 ## Deployment
 
+Couch setup is currently not automated.
+There is however `provisioning/push-views.yml`, which takes care of pushing views to an already running couch.
+
 ```
 npm install -g couchapp
 ```
 
-Before deployment, run
+### Config
+
+`provisioning/private/private-vars.yml`
+
+```yaml
+---
+db_user: mysecretuser
+db_password: mysecretpw
+db_host: mycouchdb.com
+db_name: contriboot
+
+haproxy_user: myhaproxyuser
+haproxy_password: myhaproxypw
+
+```
+
+Additionally, before deployment, run
 
 ```shell
 cp config-production.js-dist config-production.js
 ```
 
 and adjust it to your needs.
+
+Don't forget to create an inventory file!
+
+```
+[app]
+183.75.53.66
+
+[loadbalancer]
+188.3.1.180
+
+```
+
 
 ### Setting up app servers
 `ansible-playbook -i private/production app-server.yml`
