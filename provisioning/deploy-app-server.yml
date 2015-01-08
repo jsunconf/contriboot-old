@@ -13,14 +13,13 @@
       sudo: yes
       sudo_user: web
       notify:
-        - update config
         - reload {{project_name}}
         - flush iptables
 
-  handlers:
     - name: update config
       copy: src=../config-production.js dest={{project_root}}/config-production.js owner=web group=web mode=755
 
+  handlers:
     - name: reload {{project_name}}
       service: name={{project_name}} state=reloaded
 
