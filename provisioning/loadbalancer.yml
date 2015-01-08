@@ -1,0 +1,29 @@
+---
+- hosts: loadbalancer
+  user: root
+  sudo: yes
+  vars_files:
+    - private/private-vars.yml
+
+  tasks:
+    - name: install haproxy
+      apt: name=haproxy state=latest
+      notify: flush iptables
+
+    - name: enable haproxy
+      service: name=haproxy enabled=yes state=started
+
+    - name: enable haproxy for ubuntu
+      template: src=templates/haproxy.j2 dest=/etc/default/haproxy backup=yes
+      notify: restart haproxy
+
+    - name: add haproxy config
+      template: src=templates/haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg backup=yes
+      notify: restart haproxy
+
+  handlers:
+    - name: restart haproxy
+      service: name=haproxy state=restarted
+
+    - name: flush iptables
+      shell: iptables -F
