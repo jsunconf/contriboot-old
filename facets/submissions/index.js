@@ -112,7 +112,10 @@ exports.register = function Submissions (facet, options, next) {
               contribution: doc,
               tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname, 'contribution'),
               hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
-              respondToDoc: {title: respondToDoc.title}
+              respondToDoc: {
+                _id: respondToDoc._id,
+                title: respondToDoc.title
+              }
             });
           });
           return;
@@ -158,7 +161,8 @@ exports.register = function Submissions (facet, options, next) {
       request.server.methods.getSubmissionById(interestId, function (err, interest) {
         reply.view('submit', {
           responseToInterest: interest,
-          type: 'contributions'
+          type: 'contributions',
+          title: 'Submit a talk'
         });
       });
     }
@@ -168,7 +172,7 @@ exports.register = function Submissions (facet, options, next) {
     path: '/interests/new',
     method: 'GET',
     handler: function (request, reply) {
-      reply.view('submit', {type: 'interests'});
+      reply.view('submit', {type: 'interests', title: 'Submit an interest for a talk'});
     }
   });
 

@@ -1,3 +1,5 @@
+
+
 @import "../../bower_components/bootstrap/less/variables.less";
 
 @icon-font-path: "../../bower_components/bootstrap/fonts/";
@@ -14,18 +16,108 @@
 @import "../../bower_components/bootstrap/less/forms.less";
 @import "../../bower_components/bootstrap/less/glyphicons.less";
 
-footer {
-  height: 60px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: @brand-primary;
-  color: #fff;
+@import "fontello.less";
 
-  a {
-    color: #fff;
-  }
+@brand-primary: #8f1332;
+
+
+html, body {
+  height: 100%;
+  color: #434a54;
+  font-family: 'Merriweather', serif;
+  font-size: 100%;
+  line-height: 1.333;
+  -webkit-font-smoothing: antialiased;
+}
+
+h3 {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.site {
+  height: 100%;
+  color: #434a54;
+  font-family: 'Merriweather', serif;
+  font-size: 100%;
+  line-height: 1.333;
+  -webkit-font-smoothing: antialiased;
+}
+
+.site-header {
+  font-size: 1rem;
+  background: #92137f url("/static/basic-theme/images/header.jpg") center center no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  text-align: center;
+  color: #fff;
+}
+
+.header__logo {
+  border: 1px solid #fff;
+  margin: 2em 0;
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  -o-transition: all 0.25s;
+  -ms-transition: all 0.25s;
+  transition: all 0.25s;
+}
+
+.header__logo:hover,
+.header__logo:focus {
+  -webkit-transform: rotate(20deg);
+  -moz-transform: rotate(20deg);
+  -o-transform: rotate(20deg);
+  -ms-transform: rotate(20deg);
+  transform: rotate(20deg);
+  -webkit-border-radius: 20%;
+  border-radius: 20%;
+}
+
+.header__logo__background {
+  fill: transparent !important;
+}
+
+.header__headline {
+  font-size: 2em;
+  margin: 2em 0;
+  vertical-align: middle;
+}
+
+.menu__item {
+  display: inline-block;
+}
+
+.menu__item__link {
+  font-size: 1.25em;
+  display: inline-block;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.25em 0.25em 0.15em 0.25em;
+  margin: 0.25em 0.25em 0.35em 0.25em;
+  border-bottom: 2px solid transparent;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  -o-transition: all 0.25s;
+  -ms-transition: all 0.25s;
+  transition: all 0.25s;
+}
+
+.menu__item__link:hover, .menu__item__link:focus {
+  background-color: rgba(0,0,0,0.1);
+  text-decoration: none;
+  border-bottom-color: #fff;
+  color: #fff;
+}
+
+.menu {
+  font-size: 1rem;
+  list-style: none;
+  margin: 2em 0;
+  padding: 0;
 }
 
 .text-glyphicon {
@@ -44,4 +136,58 @@ footer {
 
 canvas {
   border: 1px solid black;
+}
+
+.footer {
+  font-size: 1rem;
+  line-height: 2em;
+  padding: 4em 0;
+  color: #aab2bd;
+  text-align: center;
+}
+
+.footer__row {
+  margin-top: 1em;
+}
+
+.footer a {
+  color: #aab2bd;
+  text-decoration: underline;
+}
+
+.footer a:hover, .footer a:focus {
+  color: #434a54;
+}
+
+.icon-twitter-bird {
+  font-size: 32px;
+}
+
+.control-col {
+  margin-top: 30px;
+}
+
+.tweet-control {
+  margin-top: 30px;
+}
+
+.vote-count {
+  font-size: 40px;
+}
+
+.respond-with-talk-container {
+  margin-top: 30px;
+  @media (max-width: @screen-md-min) {
+    text-align: center;
+  }
+}
+
+.glyphicon-plus-sign {
+  font-size: 20px;
+  top: 2px;
+  padding-right: 5px;
+}
+
+.btn-lg {
+  font-family: Helvetica, sans-serif;
 }

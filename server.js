@@ -63,10 +63,10 @@ function bootServer (cb) {
       options: {
         defaultSrc: 'none',
         scriptSrc: 'self',
-        styleSrc: 'self',
+        styleSrc: ['unsafe-inline', 'self', 'http://fonts.googleapis.com'],
         imgSrc: 'self',
         connectSrc: 'self',
-        fontSrc: 'self'
+        fontSrc: ['self', 'data:', 'http://fonts.gstatic.com']
       }
     },
     {

@@ -1,25 +1,26 @@
 <div class="row">
-  <a href="/faq"><i class="text-glyphicon glyphicon glyphicon-question-sign"></i>FAQ with all informations regarding submissions</a>
-</div>
-<div class="row">
   <div class="col-md-6">
-    <h2>Interests</h2>
-    <a class="btn btn-default" href="/interests/new">add new interest</a>
-    <ul class="interests">
-      {{#each interests}}
+    <h2>Contributions</h2>
+    <a class="btn btn-lg btn-primary" href="/contributions/new"><span class="glyphicon glyphicon-plus-sign glyphicon-align-left"></span>add contribution</a>
+    <ul class="contributions">
+      {{#each contributions}}
         <li>
-          <a href="/interests/{{this.value._id}}">{{this.value.title}}</a>
+          <a href="/contributions/{{this.value._id}}">{{this.value.title}}</a>
         </li>
       {{/each}}
     </ul>
   </div>
   <div class="col-md-6">
-    <h2>Contributions</h2>
-    <a class="btn btn-default" href="/contributions/new">add new contribution</a>
-    <ul class="contributions">
-      {{#each contributions}}
+    <h2>Interests</h2>
+    <a class="btn btn-lg btn-primary" href="/interests/new">
+      <span class="glyphicon glyphicon-plus-sign glyphicon-align-left"></span>add  interest
+    </a>
+
+
+    <ul class="interests">
+      {{#each interests}}
         <li>
-          <a href="/contributions/{{this.value._id}}">{{this.value.title}}</a>
+          <a href="/interests/{{this.value._id}}">{{this.value.title}}</a>
         </li>
       {{/each}}
     </ul>

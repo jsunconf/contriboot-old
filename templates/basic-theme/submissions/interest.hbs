@@ -1,33 +1,55 @@
 <div ng-app="votes" ng-init="votes='{{interest.votes}}';hasVoted={{hasVoted}};id='{{interest._id}}'">
   <div ng-controller="VoteController">
-    <h2>{{interest.title}}</h2>
 
-    <div>{{interest.description}}</div>
-    <div>{{interest.name}}</div>
+    <div class="row">
+      <div class="col-md-9">
+        <h2>{{interest.title}}</h2>
+        <h3 class="submission-name">{{interest.name}}
+          {{#if interest.twittername}}
+             - <a href="http://twitter.com/{{interest.twittername}}">@{{interest.twittername}}</a>
+          {{/if}}
+        </h3>
+        <div>{{interest.description}}</div>
 
-    {{#if interest.twittername}}
-      <a href="http://twitter.com/{{interest.twittername}}">@{{interest.twittername}}</a>
-    {{/if}}
-
-    {{#if tweetText}}
-      <a class="tweetlink" href="http://twitter.com/home?status={{tweetText}}">Tweet about your talk!</a>
-    {{/if}}
-
-    <div class="vote-count">
-      \{{votes}}
-    </div>
-    <form name="form" role="form" novalidate ng-submit="upvote()">
-      <button class="vote-button" ng-disabled="hasVoted">
-        UPVOTE
-      </button>
-    </form>
-    <a href="/contributions/new?respondTo={{interest._id}}" class="respond-with-talk">Respond with contribution</a>
-    {{#if responses}}
-      {{#each responses}}
-        <div class="response-to-interest">
-          <a href="/contributions/{{this.value._id}}">{{this.value.title}}</a>
+      </div>
+      <div class="col-md-3 text-center control-col">
+        <div class="vote-count">
+          \{{votes}}
         </div>
-      {{/each}}
+        <form name="form" role="form" novalidate ng-submit="upvote()">
+          <button class="btn btn-primary btn-lg vote-button" ng-disabled="hasVoted">
+            <span ng-if="!hasVoted">
+              I'm interested
+            </span>
+            <span ng-if="hasVoted">
+              Thanks
+            </span>
+
+            <span ng-class="{'glyphicon-heart': hasVoted, 'glyphicon-heart-empty': !hasVoted}"
+            class="glyphicon"></span>
+          </button>
+        </form>
+
+        {{#if tweetText}}
+        <div class="tweet-control">
+          <a class="tweetlink" href="http://twitter.com/home?status={{tweetText}}"><i class="icon-twitter-bird"></i><br/>
+          Tweet about your interest</a>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="respond-with-talk-container">
+    <a href="/contributions/new?respondTo={{interest._id}}" class="respond-with-talk btn btn-primary">Respond with contribution</a>
+    {{#if responses}}
+      <h3>Responses to this interest:</h3>
+      <ul>
+        {{#each responses}}
+          <li class="response-to-interest">
+            <a href="/contributions/{{this.value._id}}">{{this.value.title}}</a>
+          </li>
+        {{/each}}
+      </ul>
     {{/if}}
   </div>
 </div>

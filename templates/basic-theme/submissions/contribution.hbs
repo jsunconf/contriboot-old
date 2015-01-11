@@ -1,32 +1,53 @@
 <div ng-app="votes" ng-init="votes='{{contribution.votes}}';hasVoted={{hasVoted}};id='{{contribution._id}}'">
   <div ng-controller="VoteController">
 
-    <h2>{{contribution.title}}</h2>
+    <div class="row">
+      <div class="col-md-9">
+        <h2>{{contribution.title}}</h2>
+        <h3 class="submission-name">{{contribution.name}}
+          {{#if contribution.twittername}}
+             - <a href="http://twitter.com/{{contribution.twittername}}">@{{contribution.twittername}}</a>
+          {{/if}}
+        </h3>
+        <div>{{contribution.description}}</div>
 
-    <div>{{contribution.description}}</div>
-    <div>{{contribution.name}}</div>
+      </div>
+      <div class="col-md-3 text-center control-col">
+        <div class="vote-count">
+          \{{votes}}
+        </div>
+        <form name="form" role="form" novalidate ng-submit="upvote()">
+          <button class="btn btn-primary btn-lg vote-button" ng-disabled="hasVoted">
+            <span ng-if="!hasVoted">
+              I'm interested
+            </span>
+            <span ng-if="hasVoted">
+              Thanks
+            </span>
 
-    {{#if contribution.twittername}}
-      <a href="http://twitter.com/{{contribution.twittername}}">@{{contribution.twittername}}</a>
-    {{/if}}
+            <span ng-class="{'glyphicon-heart': hasVoted, 'glyphicon-heart-empty': !hasVoted}"
+            class="glyphicon"></span>
+          </button>
+        </form>
 
-    {{#if tweetText}}
-      <a class="tweetlink" href="http://twitter.com/home?status={{tweetText}}">Tweet about your talk!</a>
-    {{/if}}
-
-    <div class="vote-count">
-      \{{votes}}
+        {{#if tweetText}}
+        <div class="tweet-control">
+          <a class="tweetlink" href="http://twitter.com/home?status={{tweetText}}"><i class="icon-twitter-bird"></i><br/>
+          Tweet about your talk</a>
+        </div>
+        {{/if}}
+      </div>
     </div>
-    <form name="form" role="form" novalidate ng-submit="upvote()">
-      <button class="vote-button" ng-disabled="hasVoted">
-        UPVOTE
-      </button>
-    </form>
+
   </div>
   {{#if respondToDoc}}
     <h3>This contribution is a repsonse to:</h3>
     <div class="respond-to-doc">
-      {{respondToDoc.title}}
+      <ul>
+        <li>
+          <a href="/interests/{{respondToDoc._id}}">{{respondToDoc.title}}</a>
+        </li>
+      </ul>
     </div>
   {{/if}}
 </div>
