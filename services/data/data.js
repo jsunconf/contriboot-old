@@ -55,19 +55,21 @@ exports.register = function Couch (service, couchSettings, next) {
         return next(err);
       }
 
-      var url = '/_design/contributions/_view/voteCountBySubmission';
-      couch.get(url + '?group=true&key="' + id + '"', function (err, cr, votesData) {
-        var voteObject = votesData.rows[0];
-        var votes = voteObject && voteObject.value || 0;
+      return next(null, data);
+    });
+  });
 
-        if (err || cr && cr.statusCode !== 200 || !data) {
-          return next(err);
-        }
+  service.method('getVotesbySubmissionId', function (id, next) {
+    var url = '/_design/contributions/_view/voteCountBySubmission';
+    couch.get(url + '?group=true&key="' + id + '"', function (err, cr, votesData) {
+      var voteObject = votesData.rows[0];
+      var votes = voteObject && voteObject.value || 0;
 
-        data.votes = votes;
+      if (err || cr && cr.statusCode !== 200) {
+        return next(err);
+      }
 
-        return next(null, data);
-      });
+      return next(null, votes);
     });
   });
 

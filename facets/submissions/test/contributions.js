@@ -28,6 +28,10 @@ before(function (done) {
   server.methods.getSubmissionById = function (id, next) {
     return next(null, fakeData.rows[0].value);
   };
+
+  server.methods.getVotesbySubmissionId = function (id, next) {
+    return next(null, 0);
+  };
 });
 
 describe('contributions', function () {

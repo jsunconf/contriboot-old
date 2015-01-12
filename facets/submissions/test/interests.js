@@ -32,6 +32,10 @@ before(function (done) {
   server.methods.getResponsesForInterest = function (id, next) {
     return next(null, []);
   };
+
+  server.methods.getVotesbySubmissionId = function (id, next) {
+    return next(null, 0);
+  };
 });
 
 describe('interests', function () {

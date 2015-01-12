@@ -106,25 +106,29 @@ exports.register = function Submissions (facet, options, next) {
           return reply(Boom.notFound('Id not found'));
         }
 
-        if (doc.responseTo) {
-          request.server.methods.getSubmissionById(doc.responseTo, function (err, respondToDoc) {
-            reply.view('contribution', {
-              contribution: doc,
-              tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname, 'contribution'),
-              hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
-              respondToDoc: {
-                _id: respondToDoc._id,
-                title: respondToDoc.title
-              }
+        request.server.methods.getVotesbySubmissionId(doc._id, function (err, votes) {
+          if (doc.responseTo) {
+            request.server.methods.getSubmissionById(doc.responseTo, function (err, respondToDoc) {
+              reply.view('contribution', {
+                votes: votes,
+                contribution: doc,
+                tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname, 'contribution'),
+                hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
+                respondToDoc: {
+                  _id: respondToDoc._id,
+                  title: respondToDoc.title
+                }
+              });
             });
-          });
-          return;
-        }
+            return;
+          }
 
-        reply.view('contribution', {
-          contribution: doc,
-          hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
-          tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname,  'contribution')
+          reply.view('contribution', {
+            votes: votes,
+            contribution: doc,
+            hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
+            tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname,  'contribution')
+          });
         });
       });
     }
@@ -139,13 +143,15 @@ exports.register = function Submissions (facet, options, next) {
         if (!doc || !doc._id) {
           return reply(Boom.notFound('Id not found'));
         }
-
-        request.server.methods.getResponsesForInterest(doc._id, function (err, responses) {
-          reply.view('interest', {
-            interest: doc,
-            hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
-            tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname, 'interest'),
-            responses: responses
+        request.server.methods.getVotesbySubmissionId(doc._id, function (err, votes) {
+          request.server.methods.getResponsesForInterest(doc._id, function (err, responses) {
+            reply.view('interest', {
+              votes: votes,
+              interest: doc,
+              hasVoted: hasUserAlreadyVotedForSubmission(request, doc),
+              tweetText: getTweetTextOrNull(request, options.domain, doc._id, options.eventname, 'interest'),
+              responses: responses
+            });
           });
         });
       });
