@@ -9,7 +9,8 @@
   "scripts": {
     "test": "make test",
     "dev": "npm run bootstrap && gulp",
-    "bootstrap": "node ./bootstrap.js && gulp less"
+    "bootstrap": "node ./bootstrap.js && gulp less",
+    "less": "gulp less"
   },
   "repository": {
     "type": "git",
