@@ -8,6 +8,10 @@
   user: root
 
   tasks:
+
+    - name: make sure our less is compiled
+      local_action: chdir=../ npm run less
+
     - name: update repo
       git: repo={{project_repo}} version=master dest={{project_root}}
       sudo: yes
