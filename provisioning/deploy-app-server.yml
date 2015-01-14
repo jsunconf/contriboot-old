@@ -1,4 +1,10 @@
 ---
+- hosts: 127.0.0.1
+
+  tasks:
+    - name: make sure our less is compiled
+      local_action: command chdir=../ npm run less
+
 - hosts: app
   vars_files:
     - vars.yml
@@ -8,6 +14,7 @@
   user: root
 
   tasks:
+
     - name: update repo
       git: repo={{project_repo}} version=master dest={{project_root}}
       sudo: yes
