@@ -61,7 +61,7 @@ describe('Respond to interest', function () {
         .getAttribute('href')
         .then(function (value) {
           expect(value).to.not.contain('undefined');
-          return expect(value).to.contain('I%20submitted%20a%20talk%20for%20JS%20Unconf%3A%20http%3A%2F%2Fcontribs.jsunconf.eu%2Fcontributions');
+          return expect(value).to.contain('I%20submitted%20a%20talk%20for');
         })
       .nodeify(done);
   });

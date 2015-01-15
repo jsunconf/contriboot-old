@@ -17,8 +17,8 @@ var config = {
     port: port,
     host: 'localhost',
     theme: 'basic-theme',
-    domain: 'http://contribs.jsunconf.eu',
-    eventname: 'JS Unconf'
+    domain: 'http://example.com',
+    eventname: 'Example Unconf'
   }
 };
 

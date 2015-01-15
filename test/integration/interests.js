@@ -54,7 +54,7 @@ describe('Interests', function () {
       .getAttribute('href')
       .then(function (value) {
         expect(value).to.not.contain('undefined');
-        return expect(value).to.contain('I%20submitted%20an%20interest%20for%20JS%20Unconf%3A%20http%3A%2F%2Fcontribs.jsunconf.eu%2Finterests');
+        return expect(value).to.contain('I%20submitted%20an%20interest');
       })
     .nodeify(done);
   });
