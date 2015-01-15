@@ -201,10 +201,11 @@ exports.register = function Submissions (facet, options, next) {
       request.server.methods.saveSubmission(payload, function (err, doc) {
         var created = getCreatedFromCookie(request);
         created.push(doc.id);
-
-        reply()
-          .redirect('/interests/' + doc.id)
-          .state('created', {created: created});
+        request.server.methods.getContributionsAndInterests.cache.drop(function () {
+          reply()
+            .redirect('/interests/' + doc.id)
+            .state('created', {created: created});
+        });
       });
     }
   });
@@ -230,13 +231,15 @@ exports.register = function Submissions (facet, options, next) {
       if (payload.interest) {
         payload.responseTo = payload.interest;
       }
+
       request.server.methods.saveSubmission(payload, function (err, doc) {
         created = getCreatedFromCookie(request);
         created.push(doc.id);
-
-        reply()
-          .redirect('/contributions/' + doc.id)
-          .state('created', {created: created});
+        request.server.methods.getContributionsAndInterests.cache.drop(function () {
+          reply()
+            .redirect('/contributions/' + doc.id)
+            .state('created', {created: created});
+        });
       });
     }
   });

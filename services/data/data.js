@@ -15,6 +15,9 @@ function sanitizeSubmissionPayLoad (payload) {
   return payload;
 }
 
+// https://github.com/hapijs/catbox-memory/blob/24666de6f685f6f71c3cd4521746e2ab61e14de6/lib/index.js#L149
+const CACHE_TIME = 2147483647;
+
 exports.register = function Couch (service, couchSettings, next) {
   var auth = {
         name: couchSettings.username,
@@ -36,6 +39,10 @@ exports.register = function Couch (service, couchSettings, next) {
       }
       return next(null, data);
     });
+  }, {
+    cache: {
+      expiresIn: CACHE_TIME
+    }
   });
 
   service.method('getResponsesForInterest', function (id, next) {
