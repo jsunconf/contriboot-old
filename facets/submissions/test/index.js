@@ -23,6 +23,7 @@ before(function (done) {
       views: config.server.views
     }, 'submissions')
   }, done);
+
   // mock couch call
   server.methods.getContributionsAndInterests = function (next) {
     return next(null, fakeData);

@@ -1,6 +1,7 @@
 var Boom = require('boom'),
     Joi = require('joi'),
-    qs = require('querystring');
+    qs = require('querystring'),
+    markdown = require('markdown').markdown;
 
 function getVotesFromCookie (request) {
   return request.state.votes && request.state.votes.votes || [];
@@ -106,6 +107,8 @@ exports.register = function Submissions (facet, options, next) {
           return reply(Boom.notFound('Id not found'));
         }
 
+        doc.description = markdown.toHTML(doc.description);
+
         request.server.methods.getVotesbySubmissionId(doc._id, function (err, votes) {
           if (doc.responseTo) {
             request.server.methods.getSubmissionById(doc.responseTo, function (err, respondToDoc) {
@@ -143,6 +146,9 @@ exports.register = function Submissions (facet, options, next) {
         if (!doc || !doc._id) {
           return reply(Boom.notFound('Id not found'));
         }
+
+        doc.description = markdown.toHTML(doc.description);
+
         request.server.methods.getVotesbySubmissionId(doc._id, function (err, votes) {
           request.server.methods.getResponsesForInterest(doc._id, function (err, responses) {
             reply.view('interest', {
