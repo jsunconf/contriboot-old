@@ -4,7 +4,7 @@
     <a class="add-button btn btn-lg btn-primary" href="/contributions/new"><span class="glyphicon glyphicon-plus-sign glyphicon-align-left"></span>add contribution</a>
     <ul class="contributions">
       {{#each contributions}}
-        <li>
+        <li class="title-submission">
           <a href="/contributions/{{this.value._id}}">{{this.value.title}}</a>
         </li>
       {{/each}}
@@ -17,7 +17,7 @@
     </a>
     <ul class="interests">
       {{#each interests}}
-        <li>
+        <li class="title-submission">
           <a href="/interests/{{this.value._id}}">{{this.value.title}}</a>
         </li>
       {{/each}}
