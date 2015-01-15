@@ -11,5 +11,6 @@ var config = {
     theme: 'basic-theme',
     domain: 'http://example.com',
     eventname: 'Example Unconf'
+    googleAnalyticsUaCode: ''
   }
 };

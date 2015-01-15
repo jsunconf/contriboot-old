@@ -18,7 +18,8 @@ var config = {
     host: 'localhost',
     theme: 'basic-theme',
     domain: 'http://example.com',
-    eventname: 'Example Unconf'
+    eventname: 'Example Unconf',
+    googleAnalyticsUaCode: ''
   }
 };
 
@@ -31,6 +32,7 @@ exports.host = config.app.host;
 exports.theme = config.app.theme;
 exports.domain = config.app.domain;
 exports.eventname = config.app.eventname;
+exports.googleAnalyticsUaCode = config.app.googleAnalyticsUaCode;
 exports.couch = config.couch;
 
 var templatePath = path.resolve(__dirname, 'templates', exports.theme);
@@ -41,7 +43,8 @@ exports.server = {
     },
     path: templatePath,
     layoutPath: templatePath,
-    layout: true
+    layout: true,
+    helpersPath: __dirname + '/templates/helpers'
   }
 };
 
