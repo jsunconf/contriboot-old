@@ -1,3 +1,11 @@
+if (process.env.NODE_ENV === 'production') {
+  try {
+    require('newrelic');
+  } catch (e) {
+
+  }
+}
+
 var Hapi = require('hapi'),
     Scooter = require('scooter'),
     Blankie = require('blankie'),

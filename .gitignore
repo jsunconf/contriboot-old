@@ -16,6 +16,7 @@ static/basic-theme/css/*.css
 
 .vagrant
 config-production.js
+newrelic.js
 provisioning/private/*
 
 node_modules/async-minihelper
