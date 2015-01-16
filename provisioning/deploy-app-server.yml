@@ -24,7 +24,9 @@
       copy: src=../static/{{theme_to_deploy}}/css/style.css dest={{project_root}}/static/{{theme_to_deploy}}/css/style.css owner=web group=web mode=755
 
     - name: update config
-      copy: src=../config-production.js dest={{project_root}}/config-production.js owner=web group=web mode=755
+      template: src=templates/config.js.j2 dest={{project_root}}/config-production.js backup=yes
+      sudo: yes
+      sudo_user: web
       notify:
         - reload {{project_name}}
         - flush iptables

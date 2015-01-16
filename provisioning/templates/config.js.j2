@@ -1,0 +1,18 @@
+var config = {
+  couch: {
+    url: 'https://{{db_host}}',
+    username: '{{db_user}}',
+    password: '{{db_password}}',
+    dbName: '{{db_name}}'
+  },
+  app: {
+    port: {{app_port}},
+    host: '{{app_host}}',
+    theme: '{{theme_to_deploy}}',
+    domain: '{{domain}}',
+    eventname: '{{event_name}}',
+    googleAnalyticsUaCode: '{{google_analytics_ua_code}}'
+  }
+};
+
+module.exports = config;

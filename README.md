@@ -36,7 +36,18 @@ There is however `provisioning/push-views.yml`, which takes care of pushing view
 npm install -g couchapp
 ```
 
-### Config
+We automated a lot of tasks, but if you don't use our Ansible based
+deployment, before deployment, run
+
+```shell
+cp config-production.js-dist config-production.js
+```
+
+and adjust it to your needs. This file is needed in the root of the
+project. If you decide to use Ansible, they will be placed on the
+server for you,
+
+### Setup with Ansible
 
 `provisioning/private/private-vars.yml`
 
@@ -50,15 +61,15 @@ db_name: contriboot
 haproxy_user: myhaproxyuser
 haproxy_password: myhaproxypw
 
+app_port: 8080
+app_host: '0.0.0.0'
+domain: http://example.com
+event_name: My Unconference
+
+google_analytics_ua_code: UA-XXXXXX
+new_relic_key: 123mykey123
+
 ```
-
-Additionally, before deployment, run
-
-```shell
-cp config-production.js-dist config-production.js
-```
-
-and adjust it to your needs.
 
 Don't forget to create an inventory file!
 
@@ -71,9 +82,11 @@ Don't forget to create an inventory file!
 
 ```
 
-
 ### Setting up app servers
 `ansible-playbook -i private/production app-server.yml`
+
+### Setting up a load balancer
+`ansible-playbook -i private/production loadbalancer.yml`
 
 ### Deployment
 `ansible-playbook -i private/production deploy-app-server.yml`
