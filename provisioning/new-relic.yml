@@ -26,10 +26,7 @@
       apt_key: https://download.newrelic.com/548C16BF.gpg
 
     - name: add new-relic package to apt
-      shell: echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
-
-    - name: add chris lea's ppa
-      apt_repository: repo='ppa:chris-lea/node.js' state=present update_cache=yes
+      apt_repository: repo='deb http://apt.newrelic.com/debian/ newrelic non-free' update_cache=yes
 
     - name: add new relic daemon
       apt: pkg=newrelic-sysmond state=latest
