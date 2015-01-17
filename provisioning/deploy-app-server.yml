@@ -19,25 +19,33 @@
       git: repo={{project_repo}} version=master dest={{project_root}}
       sudo: yes
       sudo_user: web
+      notify:
+        - reload application
 
     - name: copy over generated css
       copy: src=../static/{{theme_to_deploy}}/css/style.css dest={{project_root}}/static/{{theme_to_deploy}}/css/style.css owner=web group=web mode=755
+      sudo: yes
+      sudo_user: web
+      notify:
+        - reload application
 
     - name: add new-relic-config
       template: src=templates/newrelic.js.j2 dest={{project_root}}/newrelic.js backup=yes
       sudo: yes
       sudo_user: web
+      notify:
+        - reload application
 
     - name: update config
       template: src=templates/config.js.j2 dest={{project_root}}/config-production.js backup=yes
       sudo: yes
       sudo_user: web
       notify:
-        - reload {{project_name}}
+        - reload application
         - flush iptables
 
   handlers:
-    - name: reload {{project_name}}
+    - name: reload application
       service: name={{project_name}} state=reloaded
 
     - name: flush iptables
