@@ -1,0 +1,42 @@
+# apm - application based monitoring
+
+- hosts: app
+  vars_files:
+    - vars.yml
+    - private/private-vars.yml
+
+  sudo: yes
+  user: root
+
+  tasks:
+    - name: add new-relic-config
+      template: src=templates/newrelic.js.j2 dest={{project_root}}/newrelic.js backup=yes
+      sudo: yes
+      sudo_user: web
+
+# server - server based monitoring
+
+- hosts: app:loadbalancer
+  vars_files:
+    - private/private-vars.yml
+
+  sudo: yes
+  user: root
+
+  tasks:
+    - name: add new-relic key
+      apt_key: url=https://download.newrelic.com/548C16BF.gpg
+
+    - name: add new-relic package to apt
+      apt_repository: repo='deb http://apt.newrelic.com/debian/ newrelic non-free' update_cache=yes
+
+    - name: add new relic daemon
+      apt: pkg=newrelic-sysmond state=latest
+      notify: start daemon
+
+    - name: set license key
+      command: nrsysmond-config --set license_key={{new_relic_key}}
+
+  handlers:
+    - name: start daemon
+      shell: /etc/init.d/newrelic-sysmond start
