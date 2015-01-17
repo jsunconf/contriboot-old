@@ -36,14 +36,6 @@ describe('contributions', function () {
       done();
     };
 
-    server.methods.getContributionsAndInterests = {
-      cache: {
-        drop: function (next) {
-          next();
-        }
-      }
-    };
-
     server.inject({
       url: '/contributions/',
       method: 'POST',
