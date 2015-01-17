@@ -23,11 +23,6 @@
     - name: copy over generated css
       copy: src=../static/{{theme_to_deploy}}/css/style.css dest={{project_root}}/static/{{theme_to_deploy}}/css/style.css owner=web group=web mode=755
 
-    - name: add new-relic-config
-      template: src=templates/newrelic.js.j2 dest={{project_root}}/newrelic.js backup=yes
-      sudo: yes
-      sudo_user: web
-
     - name: update config
       template: src=templates/config.js.j2 dest={{project_root}}/config-production.js backup=yes
       sudo: yes
