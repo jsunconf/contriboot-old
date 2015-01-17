@@ -1,6 +1,6 @@
 var Lab = require('lab'),
   describe = Lab.experiment,
-  before = Lab.before,
+  beforeEach = Lab.beforeEach,
   it = Lab.test,
   expect = Lab.expect,
   config = require('../../../config.js'),
@@ -14,27 +14,29 @@ var options = {url: '/contributions/someid'},
 
 var fakeData = require('./fixtures/ci.json');
 
-before(function (done) {
-  server = new Hapi.Server();
-  server.connection();
-  server.register({
-    register: submissions,
-    options: getViewPath({
-      views: config.server.views
-    }, 'submissions')
-  }, done);
-
-  // mock couch call
-  server.methods.getSubmissionById = function (id, next) {
-    return next(null, fakeData.rows[0].value);
-  };
-
-  server.methods.getVotesbySubmissionId = function (id, next) {
-    return next(null, 0);
-  };
-});
 
 describe('contributions', function () {
+
+  beforeEach(function (done) {
+    server = new Hapi.Server();
+    server.connection();
+    server.register({
+      register: submissions,
+      options: getViewPath({
+        views: config.server.views
+      }, 'submissions')
+    }, done);
+
+    // mock couch call
+    server.methods.getSubmissionById = function (id, next) {
+      return next(null, fakeData.rows[0].value);
+    };
+
+    server.methods.getVotesbySubmissionId = function (id, next) {
+      return next(null, 0);
+    };
+  });
+
   it('displays contributions headline', function (done) {
     server.inject(options, function (resp) {
       expect(resp.result).to.contain('<h2>npm</h2>');
@@ -50,6 +52,23 @@ describe('contributions', function () {
 
     server.inject(options, function (resp) {
       expect(resp.statusCode).to.equal(404);
+      done();
+    });
+  });
+
+  it('renders description markdown as html', function (done) {
+
+    var submissionWithMarkdown = {
+      description: "## Happiness galore!!1",
+      _id: 'someid'
+    };
+
+    server.methods.getSubmissionById = function (id, next) {
+      return next(null, submissionWithMarkdown);
+    };
+
+    server.inject(options, function (resp) {
+      expect(resp.result).to.contain('<h2>Happiness galore!!1</h2>');
       done();
     });
   });

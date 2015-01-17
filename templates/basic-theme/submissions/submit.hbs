@@ -24,6 +24,7 @@
     <div class="form-group">
       <label for="description">Description* (min 10 chars)</label>
       <textarea rows="10" ng-required="true" ng-minlength="10" ng-model="submission.description" name="description" class="form-control"></textarea>
+      <div class="pull-right markdown-info"><span class="glyphicon-info-sign glyphicon markdown-info-icon"></span>Markdown supported</div>
     </div>
 
     {{#if responseToInterest}}
