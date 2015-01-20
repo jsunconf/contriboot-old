@@ -3,7 +3,7 @@
 
   tasks:
     - name: make sure our less is compiled
-      local_action: command chdir=../ npm run less
+      local_action: command chdir=../ gulp build-assets
 
 - hosts: app
   vars_files:
@@ -20,8 +20,8 @@
       sudo: yes
       sudo_user: web
 
-    - name: copy over generated css
-      copy: src=../static/{{theme_to_deploy}}/css/style.css dest={{project_root}}/static/{{theme_to_deploy}}/css/style.css owner=web group=web mode=755
+    - name: copy over assets
+      copy: src=../static-dist dest={{project_root}}/static-dist owner=web group=web mode=755
 
     - name: update config
       template: src=templates/config.js.j2 dest={{project_root}}/config-production.js backup=yes

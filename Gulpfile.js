@@ -5,7 +5,8 @@ var config = require('./config.js'),
     uglify = require('gulp-uglify'),
     changed = require('gulp-changed');
 
-const STATIC_DESTINATION = './static-dist/';
+const STATIC_DESTINATION = './static-dist';
+const STATIC_SOURCE = './static';
 
 
 gulp.task('default', function () {
@@ -16,21 +17,29 @@ gulp.task('default', function () {
     .on('change', ['build-assets']);
 });
 
+
 gulp.task('less', function () {
-  gulp.src('./static/' + config.theme + '/less/*.less')
+  gulp.src(STATIC_SOURCE + '/' + config.theme + '/less/*.less')
     .pipe(less())
     .pipe(gulp.dest(STATIC_DESTINATION + '/' + config.theme + '/css'));
 });
 
 gulp.task('js', function () {
   // /static/bower_components/jquery/src/intro.js cannot be parsed and we do not need it
-  gulp.src(['./static/**/*.js', '!./static/bower_components/jquery/src/*'])
+  gulp.src([STATIC_SOURCE + '/' + '/**/*.js', '!' + STATIC_SOURCE + '/' + 'bower_components/jquery/src/*'])
     .pipe(changed(STATIC_DESTINATION))
     .pipe(uglify())
     .pipe(gulp.dest(STATIC_DESTINATION));
 });
 
-gulp.task('build-assets', ['less', 'js']);
+
+gulp.task('copy-static', function() {
+  gulp.src(STATIC_SOURCE + '/**')
+  .pipe(changed(STATIC_DESTINATION))
+  .pipe(gulp.dest(STATIC_DESTINATION));
+});
+
+gulp.task('build-assets', ['copy-static', 'less', 'js']);
 
 
 
