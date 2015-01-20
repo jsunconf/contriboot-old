@@ -1,7 +1,7 @@
 var config = require('./config.js'),
     gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
-    less = require('gulp-less');
+    less = require('gulp-less'),
     minifyCSS = require('gulp-minify-css');
 
 gulp.task('default', function () {
