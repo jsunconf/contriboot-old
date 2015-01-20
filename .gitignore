@@ -12,7 +12,7 @@ coverage.html
 lib-cov
 
 selenium-server-standalone-*.jar
-static/basic-theme/css/*.css
+static-dist/*
 
 .vagrant
 config-production.js
