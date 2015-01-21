@@ -2,8 +2,8 @@ var request = require('request'),
     async = require('async-minihelper'),
     couchApp = require('couchapp'),
     couch = require('./config.js').couch,
-    root = 'http://' + couch.username + ':' + couch.password + '@' + couch.url.replace('http://', '') + '/',
-    testDbName = couch.dbName,
+    root = couch.protocol + '://' + couch.username + ':' +
+        couch.password + '@' + couch.host + '/' + couch.dbName,
     testDataSubmissions = require('./test/fixtures/contribs-interests.json'),
     testDataVotes = require('./test/fixtures/votes.json'),
     hoek = require('hoek'),
@@ -12,7 +12,7 @@ var request = require('request'),
 
 function createDb (cb) {
   request({
-    uri: root + testDbName,
+    uri: root,
     method: 'PUT',
     json: true
   }, function (err, res, body) {
@@ -27,7 +27,7 @@ function createDb (cb) {
 
 function populateDb (cb) {
   request({
-    uri: root + testDbName + '/_bulk_docs',
+    uri: root + '/_bulk_docs',
     method: 'POST',
     json: true,
     body: {
@@ -45,7 +45,7 @@ function populateDb (cb) {
 
 function deleteDb (cb) {
   request({
-    uri: root + testDbName,
+    uri: root,
     method: 'DELETE',
     json: true
   }, function (err, res, body) {
@@ -59,7 +59,7 @@ function deleteDb (cb) {
 }
 
 function createViews (cb) {
-  couchApp.createApp(require('./couch-data/views.js'), root + testDbName, function (doc) {
+  couchApp.createApp(require('./couch-data/views.js'), root, function (doc) {
     doc.push();
     cb && cb();
   });

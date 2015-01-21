@@ -8,7 +8,8 @@ if (process.env.NODE_ENV === 'test') {
 
 var config = {
   couch: {
-    url: 'http://127.0.0.1:5984',
+    protocol: 'http',
+    host: '127.0.0.1:5984',
     username: 'admin',
     password: 'admin',
     dbName: 'contriboot_dev'

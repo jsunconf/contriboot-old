@@ -28,7 +28,6 @@
   "dependencies": {
     "blankie": "~1.0.0",
     "boom": "~2.6.1",
-    "couch-login": "^1.0.0",
     "handlebars": "^2.0.0",
     "hapi": "~8.0.0",
     "hoek": "^2.3.0",
