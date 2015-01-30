@@ -16,6 +16,25 @@ describe('XSS', function () {
     done();
   });
 
+  //@see https://github.com/jsunconf/contriboot/issues/69
+  it('allows to include constructs looking like html tags without prematurely ending the input', helper.options, function (done) {
+    var b = browser.get(url + '/contributions/new'),
+        values = {
+          title: 'someTitle',
+          name: 'someName',
+          description: 'Awesome <5kb foo'
+        };
+
+    fillOutSubmission(b, values)
+        .elementByTagName('body')
+        .text()
+        .then(function (value) {
+          console.log(value);
+          return expect(value).to.contain('Awesome <5kb foo');
+        })
+        .nodeify(done);
+  });
+  
   it('removes script foo', helper.options, function (done) {
     var b = browser.get(url + '/contributions/new'),
         values = {
