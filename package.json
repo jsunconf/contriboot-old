@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/jsunconf/contriboot",
   "dependencies": {
-    "blankie": "~1.0.0",
+    "blankie": "^1.0.0",
     "boom": "~2.6.1",
     "handlebars": "^2.0.0",
     "hapi": "^8.0.0",
