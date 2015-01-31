@@ -1,13 +1,8 @@
-var nano = require('nano'),
-    sanitizer = require('sanitizer');
+var nano = require('nano');
 
 
 exports.sanitizeSubmissionPayLoad = sanitizeSubmissionPayLoad;
 function sanitizeSubmissionPayLoad (payload) {
-  Object.keys(payload).forEach(function (key) {
-    payload[key] = sanitizer.sanitize(payload[key]);
-  });
-
   if (payload.twittername) {
     payload.twittername = payload.twittername.replace(/@/ig, '');
   }

@@ -35,19 +35,21 @@ describe('XSS', function () {
         .nodeify(done);
   });
   
-  it('removes script foo', helper.options, function (done) {
+  it('escapes markup', helper.options, function (done) {
     var b = browser.get(url + '/contributions/new'),
         values = {
-          title: '<script>alert("ente ente")</script>',
-          name: '<script>alert("ente ente")</script>',
+          title: '<b>title</b>',
+          name: '<b>name</b>',
           description: '<script>alert("ente ente")</script>'
         };
 
     fillOutSubmission(b, values)
       .elementByTagName('body')
-      .text()
+      .getAttribute('innerHTML')
       .then(function (value) {
-        return expect(value).to.not.contain('alert');
+        expect(value).to.contain('&lt;b&gt;title&lt;/b&gt;');
+        expect(value).to.contain('&lt;b&gt;name&lt;/b&gt;');
+        return expect(value).to.contain('&lt;script&gt;alert("ente ente")&lt;/script&gt;');
       })
       .nodeify(done);
   });
