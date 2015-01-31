@@ -33,7 +33,6 @@
     "hoek": "^2.3.0",
     "joi": "^5.0.0",
     "markdown": "^0.5.0",
-    "sanitizer": "~0.1.2",
     "scooter": "~2.0.1"
   },
   "devDependencies": {
