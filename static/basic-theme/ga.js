@@ -3,6 +3,22 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', '{{googleAnalyticsUaCode}}', 'auto');
-ga('set', 'anonymizeIp', true);
-ga('send', 'pageview');
+(function() {
+
+  /**
+   * read data-ua-code attribute configured on surrounding script tag
+   * would probably fail if script is loaded async
+   *
+   * @returns {string|*}
+   */
+  function readUaCode() {
+    var scripts = document.getElementsByTagName('script');
+    var currentScript = scripts[scripts.length -1];
+
+    return currentScript.getAttribute('data-ua-code');
+  }
+
+  ga('create', readUaCode(), 'auto');
+  ga('set', 'anonymizeIp', true);
+  ga('send', 'pageview');
+})();
