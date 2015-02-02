@@ -70,7 +70,7 @@ function bootServer (cb) {
       register: Blankie,
       options: {
         defaultSrc: 'none',
-        scriptSrc: 'self',
+        scriptSrc: ['self', 'www.google-analytics.com'],
         styleSrc: ['unsafe-inline', 'self', 'fonts.googleapis.com'],
         imgSrc: '*',
         connectSrc: 'self',
