@@ -1,0 +1,15 @@
+{
+  "name": "contriboot-tracking",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -v"
+  },
+  "devDependencies": {
+    "lab": "^3.2.1"
+  },
+  "dependencies": {
+    "handlebars": "^2.0.0"
+  }
+}

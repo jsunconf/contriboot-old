@@ -45,7 +45,6 @@ exports.server = {
     path: templatePath,
     layoutPath: templatePath,
     layout: true,
-    helpersPath: __dirname + '/templates/helpers'
   }
 };
 
