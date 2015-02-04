@@ -7,6 +7,7 @@ unit:
 	./node_modules/lab/bin/lab ./test/unit
 	cd ./facets/about && npm test
 	cd ./facets/submissions && npm test
+	cd ./facets/tracking && npm test
 	cd ./services/data && npm test
 
 integration:

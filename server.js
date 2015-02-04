@@ -63,14 +63,13 @@ function bootServer (cb) {
 
     return reply.view('error', {msg: msg}).code(code);
   });
-
   server.register([
     Scooter,
     {
       register: Blankie,
       options: {
         defaultSrc: 'none',
-        scriptSrc: 'self',
+        scriptSrc: ['self', 'www.google-analytics.com'],
         styleSrc: ['unsafe-inline', 'self', 'fonts.googleapis.com'],
         imgSrc: '*',
         connectSrc: 'self',
@@ -92,6 +91,12 @@ function bootServer (cb) {
         eventname: config.eventname,
         views: config.server.views
       }, 'submissions')
+    },
+    {
+      register: require('./facets/tracking'),
+      options: {
+        googleAnalyticsUaCode: config.googleAnalyticsUaCode
+      }
     },
     {
       register: require('./services/data'),
