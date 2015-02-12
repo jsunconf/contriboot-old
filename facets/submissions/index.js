@@ -204,6 +204,8 @@ exports.register = function Submissions (facet, options, next) {
     handler: function (request, reply) {
       var payload = request.payload;
       payload.type = 'interest';
+      payload.created_on = new Date();
+
       request.server.methods.saveSubmission(payload, function (err, doc) {
         var created = getCreatedFromCookie(request);
         created.push(doc.id);
@@ -233,6 +235,8 @@ exports.register = function Submissions (facet, options, next) {
       var payload = request.payload,
           created;
       payload.type = 'contribution';
+      payload.created_on = new Date();
+
       if (payload.interest) {
         payload.responseTo = payload.interest;
       }

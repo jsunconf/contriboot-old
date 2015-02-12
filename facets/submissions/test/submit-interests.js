@@ -1,10 +1,12 @@
 var Lab = require('lab'),
     describe = Lab.experiment,
     before = Lab.before,
+    afterEach = Lab.afterEach,
     it = Lab.test,
     expect = Lab.expect,
     config = require('../../../config.js'),
-    getViewPath = config.getViewPath;
+    getViewPath = config.getViewPath,
+    mockDate = require('mockdate');
 
 var Hapi = require('hapi'),
     submissions = require('../');
@@ -22,13 +24,24 @@ before(function (done) {
 });
 
 describe('interests', function () {
+
+  afterEach(function (done) {
+    mockDate.reset();
+    done();
+  });
+
   it('takes interests as POST and calls the couch service', function (done) {
+
+    // "freeze" global time to current, so it's the same time when evaluating
+    // the expectation
+    mockDate.set(new Date());
 
     var expected = {
       title: 'Mytitle',
       name: 'Myname',
       description: 'Mydescription',
-      type: 'interest'
+      type: 'interest',
+      created_on: new Date()
     };
 
     server.methods.saveSubmission = function (payload, next) {
@@ -121,5 +134,28 @@ describe('interests', function () {
         done();
       });
     });
+
+    it('adds a created_on field with current datetime to interest', function (done) {
+      var currentDate = new Date(2000, 1, 1, 10, 10, 10);
+      mockDate.set(currentDate);
+
+      server.methods.saveSubmission = function (payload, next) {
+        expect(payload.created_on).to.eql(currentDate);
+        done();
+      };
+
+      server.inject({
+        url: '/contributions/',
+        method: 'POST',
+        payload: {
+          title: 'Mytitle',
+          name: 'Myname',
+          description: 'Mydescription'
+        }
+      }, function (resp) {
+
+      });
+    });
+
   });
 });
