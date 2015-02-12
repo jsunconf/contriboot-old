@@ -7,6 +7,7 @@
     "test": "lab -v"
   },
   "devDependencies": {
-    "lab": "~3.2.3"
+    "lab": "~3.2.3",
+    "mockdate": "^1.0.1"
   }
 }
