@@ -40,7 +40,7 @@ describe('contributions', function () {
       name: 'Myname',
       description: 'Mydescription',
       type: 'contribution',
-      created_on: new Date()
+      createdOn: new Date()
     };
 
     server.methods.saveSubmission = function (payload, next) {
@@ -148,12 +148,12 @@ describe('contributions', function () {
       });
     });
 
-    it('adds a created_on field with current datetime to contribution', function (done) {
+    it('adds a createdOn field with current datetime to contribution', function (done) {
       var currentDate = new Date(2000, 1, 1, 10, 10, 10);
       mockDate.set(currentDate);
 
       server.methods.saveSubmission = function (payload, next) {
-        expect(payload.created_on).to.eql(currentDate);
+        expect(payload.createdOn).to.eql(currentDate);
         done();
       };
 
